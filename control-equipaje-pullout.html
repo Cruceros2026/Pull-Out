@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control de Equipaje – Pull Out v12</title>
+<title>Control de Equipaje – Pull Out v13</title>
 <style>
 :root {
   --bg:#fafaf8; --bg2:#f2f1ed; --bg3:#e8e7e1; --bg4:#dddcd6;
@@ -241,7 +241,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <div id="app">
   <div class="app-header">
     <div class="header-left">
-      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v12</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
+      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v13</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
       <p id="hdr-sub">Sin viaje cargado</p>
     </div>
     <div class="header-right">
@@ -691,9 +691,13 @@ function login() {
   // Cargar lista de pasajeros desde Firebase
   db.ref(VOYAGE_REF + '/paxData').once('value', snap => {
     const data = snap.val();
-    if (data && Array.isArray(data) && data.length > 0) {
+    // Firebase puede devolver array u objeto — convertir a array en ambos casos
+    const paxArr = data
+      ? (Array.isArray(data) ? data : Object.values(data)).filter(Boolean)
+      : [];
+    if (paxArr.length > 0) {
       PAX_DATA.length = 0;
-      data.forEach(p => PAX_DATA.push(p));
+      paxArr.forEach(p => PAX_DATA.push(p));
       Object.keys(paxState).forEach(k => delete paxState[k]);
       PAX_DATA.forEach(p => {
         paxState[p.n] = { status:'', bags:'', hotel: p.hotelPUQ || '', notes:'' };
