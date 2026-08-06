@@ -480,6 +480,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 </div>
 <script src="https://cdn.jsdelivr.net/npm/firebase@9.23.0/firebase-app-compat.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/firebase@9.23.0/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/firebase@9.23.0/firebase-auth-compat.js"></script>
 <script>
 // ── FIREBASE ─────────────────────────────────────────────
 const firebaseConfig = {
@@ -495,6 +496,7 @@ if (typeof firebase === 'undefined') {
 }
 firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
+firebase.auth().signInAnonymously().catch(function(e){ console.error('Auth anónima falló:', e); });
 let VOYAGE_REF = 'pullout/sin_viaje';
 
 // ── DATA ─────────────────────────────────────────────────
