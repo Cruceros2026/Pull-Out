@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control de Equipaje – Pull Out v26</title>
+<title>Control de Equipaje – Pull Out v35</title>
 <style>
 :root {
   --bg:#fafaf8; --bg2:#f2f1ed; --bg3:#e8e7e1; --bg4:#dddcd6;
@@ -18,19 +18,6 @@
   --red-tag:#e74c3c; --yellow-tag:#f1c40f; --blue-tag:#2980b9;
   --radius:8px; --radius-sm:5px;
   --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-}
-@media(prefers-color-scheme:dark){
-  :root{
-    --bg:#1a1917;--bg2:#242220;--bg3:#2e2c29;--bg4:#383530;
-    --txt:#e8e6de;--txt2:#9c9a92;--txt3:#6b6860;
-    --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.16);
-    --green-bg:#0a2e1e;--green-txt:#7dd4a8;
-    --red-bg:#2e0e0a;--red-txt:#f09890;
-    --amber-bg:#2a1f00;--amber-txt:#f0c060;
-    --blue-bg:#0a1e3a;--blue-txt:#90b8f0;
-    --purple-bg:#1e0f3a;--purple-txt:#c0a0f8;
-    --gray-bg:#2a2826;--gray-txt:#a8a69e;
-  }
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14px;line-height:1.5}
@@ -211,6 +198,222 @@ tr.has-alert td{background:var(--amber-bg)}
   th:nth-child(n+8){display:none}
   td:nth-child(n+8){display:none}
 }
+.extra-note{font-size:11px;color:var(--blue-txt);background:var(--blue-bg);border-radius:4px;padding:2px 6px;margin-top:3px;display:inline-block;cursor:pointer}
+#extra-modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;z-index:2000;padding:16px}
+#extra-modal.show{display:flex}
+#extra-box{background:var(--bg);border-radius:14px;padding:20px;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+#extra-box h3{font-size:16px;margin:0 0 8px}
+#extra-box p{font-size:13px;color:var(--txt2);margin:0 0 14px;line-height:1.45}
+.extra-btn{display:block;width:100%;padding:12px;margin-top:8px;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;background:var(--blue);color:#fff}
+.extra-btn.sec{background:var(--bg3);color:var(--txt)}
+
+/* ===== v35: paleta con más color, header azul, tarjetas delimitadas ===== */
+:root{--bg:#e6edf7;--bg2:#ffffff;--bg3:#d6e3f5;--bg4:#bfd2ee;--txt:#10243f;--txt2:#40526c;--txt3:#71829c;
+ --border:rgba(19,39,67,.20);--border2:rgba(19,39,67,.35);--blue:#1a5fa8;--blue-bg:#dbe9fb;--green-bg:#d7f1e3;--amber-bg:#fdeeb8;--red-bg:#fbd9d4;}
+input,select,textarea{background-color:#fff}
+.app-header{background:linear-gradient(135deg,#0f2d4e 0%,#1a5fa8 100%);border-bottom:none;box-shadow:0 2px 8px rgba(0,0,0,.25);color:#fff}
+.app-header .header-left h1{color:#fff}
+.app-header .header-left p{color:#b9d3f2}
+.header-left small{color:#9fc2ee!important}
+#op-id-badge{background:rgba(255,255,255,.2)!important;color:#fff!important}
+.header-right button{color:#fff!important;border:1px solid rgba(255,255,255,.5)!important;border-radius:6px!important;padding:4px 10px!important}
+.tab-nav{background:#14355f;border-bottom:none;padding:0 10px}
+.tab-btn{color:#c6daf4;font-weight:600;border-bottom:3px solid transparent}
+.tab-btn.active{color:#fff;border-bottom-color:#4ec9e1;background:rgba(255,255,255,.1)}
+.filters{background:#fff;border-bottom:2px solid #b9cbe4}
+.count-badge{background:#1a5fa8;color:#fff;padding:4px 12px;border-radius:20px;font-weight:600}
+.pax-view{display:none!important}
+.pax-cards{display:grid!important;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:12px;padding:14px}
+.plane-hdr{grid-column:1/-1;background:#1a5fa8;color:#fff;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:12px;padding:8px 14px;border-radius:8px;margin-top:6px}
+.pax-card{background:#fff;border:2px solid #b3c7e3;border-left:7px solid #1a5fa8;border-radius:12px;padding:14px;margin:0;box-shadow:0 2px 8px rgba(19,39,67,.13)}
+.pax-card.ok{border-left-color:#1a8a5a;border-color:#9fd3b8}
+.pax-card.has-alert{background:#fff8dc;border-color:#d9a400;border-left-color:#d9a400}
+.pax-card.has-report{border-color:#d9534f;border-left-color:#c0392b;box-shadow:0 2px 10px rgba(192,57,43,.25)}
+.pax-card-name{font-size:16px;color:#0f2d4e;border-bottom:1px solid #dbe5f3;padding-bottom:6px;margin-bottom:8px}
+.pax-card-meta span{background:#dbe9fb;color:#0d3d70;font-weight:600}
+.pax-card-row{align-items:flex-end}
+.pc-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2);margin-bottom:2px}
+.pc-col{display:flex;flex-direction:column;flex:1}
+.pc-col.bags{flex:none;width:76px}
+.pax-card-row input.pax-card-bags{width:100%!important;text-align:center;font-weight:700;font-size:16px}
+.pc-notes{width:100%;padding:7px 10px;border:1px solid var(--border2);border-radius:var(--radius-sm);font-size:12px;margin-bottom:6px}
+.rep-btn{width:100%;padding:9px;border:1.5px dashed #c0392b;background:#fff;color:#a52a1f;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;margin-top:4px}
+.rep-btn.has{border-style:solid;background:#fbd9d4}
+.rep-sum{font-size:12px;color:#7a1f16;margin-top:4px}
+#tab-opheader>div,.summary-section,.flight-card,.truck-card,.summary-stat{background:#fff!important;border:2px solid #b3c7e3!important;border-radius:12px;box-shadow:0 2px 8px rgba(19,39,67,.12)}
+#tab-opheader>div{border-top:6px solid #1a5fa8!important}
+.summary-title{color:#fff;background:#1a5fa8;padding:8px 14px;border-radius:8px;border:none}
+.summary-n{color:#1a5fa8}
+.fs{background:#dbe9fb;border:1px solid #b3c7e3}
+.truck-title{color:#0f2d4e}
+.log-row{background:#fff;border:2px solid #b3c7e3;border-left:6px solid #1a5fa8;border-radius:10px;padding:10px 14px;margin-bottom:8px;box-shadow:0 1px 5px rgba(19,39,67,.1)}
+.log-view>div:first-child,.trucks-view>div:first-child{color:#0f2d4e}
+#extra-box,#report-box{background:#fff}
+#report-modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:flex-start;justify-content:center;z-index:2100;padding:12px;overflow-y:auto}
+#report-modal.show{display:flex}
+#report-box{border-radius:14px;padding:18px;max-width:460px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.35);border-top:6px solid #c0392b}
+#report-box h3{font-size:16px;color:#7a1f16;margin-bottom:10px}
+#report-box label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;color:var(--txt2);margin:10px 0 3px}
+#report-box select,#report-box textarea{width:100%;padding:9px 10px;border:1px solid var(--border2);border-radius:8px;font-size:14px;font-family:inherit}
+#report-box textarea{min-height:90px;resize:vertical}
+#rep-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}
+.rep-ph{position:relative;aspect-ratio:1;border-radius:8px;overflow:hidden;border:1px solid var(--border2);background:#eef3fa}
+.rep-ph img{width:100%;height:100%;object-fit:cover}
+.rep-ph span{position:absolute;top:3px;right:3px;background:rgba(0,0,0,.65);color:#fff;border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px;font-size:12px;cursor:pointer}
+@media(max-width:700px){.pax-cards{grid-template-columns:1fr;padding:10px}}
+.tag-pill{font-weight:800!important;letter-spacing:.06em;border:2px solid transparent!important;padding:2px 12px!important}
+.pax-card-meta span.tag-pill.tag-RED,.tag-pill.tag-RED{background:#d62d20!important;color:#fff!important;border-color:#a81f15!important}
+.pax-card-meta span.tag-pill.tag-YELLOW,.tag-pill.tag-YELLOW{background:#f9d423!important;color:#111!important;border-color:#c9a400!important}
+.pax-card-meta span.tag-pill.tag-BLUE,.tag-pill.tag-BLUE{background:#1a5fa8!important;color:#fff!important;border-color:#0f3f75!important}
+.pax-card-meta span.tag-pill.tag-WHITE,.tag-pill.tag-WHITE{background:#fff!important;color:#111!important;border-color:#555!important}
+
+/* ===== v35: paleta teal + arena + navy (coral solo en detalles) ===== */
+:root{--bg:#e9f3f2;--bg2:#ffffff;--bg3:#c8e5e3;--bg4:#a3d5d1;--txt:#142b3b;--txt2:#47606b;--txt3:#7f9aa3;
+ --border:rgba(20,43,59,.16);--border2:rgba(20,43,59,.30);--blue:#1792a4;--blue-bg:#c8e5e3;--blue-txt:#142b3b;
+ --amber-bg:#f0ddaa;--amber:#c9a64a;--amber-txt:#5a4410;--green:#2f9e8f;--green-bg:#d3efe9;--green-txt:#0f5a50;
+ --red-bg:#fbe3da;--red-txt:#8a3a22;--gray-bg:#e3ecec}
+.app-header{background:linear-gradient(135deg,#142b3b 0%,#1792a4 100%)}
+.app-header .header-left p{color:#a3d5d1}
+.header-left small{color:#80c9c6!important}
+.tab-nav{background:#142b3b}
+.tab-btn{color:#a3d5d1}
+.tab-btn.active{color:#fff;border-bottom-color:#5ebdb2;background:rgba(255,255,255,.08)}
+.filters{border-bottom:2px solid #a3d5d1}
+.count-badge{background:#1792a4}
+.plane-hdr{background:#142b3b;color:#fff;border-left:6px solid #5ebdb2}
+.pax-card{border:2px solid #a3d5d1;border-left:7px solid #1792a4;box-shadow:0 2px 6px rgba(20,43,59,.10)}
+.pax-card.ok{border-color:#80c9c6;border-left-color:#2f9e8f}
+.pax-card.has-alert{background:#fbf3d9;border-color:#e0c36e;border-left-color:#c9a64a}
+.pax-card.has-report{border-color:#e47c5d;border-left-color:#e47c5d;box-shadow:0 2px 10px rgba(228,124,93,.25)}
+.pax-card-name{color:#142b3b;border-bottom:1px solid #c8e5e3}
+.pax-card-meta span{background:#c8e5e3;color:#142b3b}
+.pax-card-meta span.tag-pill{}
+.rep-btn{border:1.5px dashed #e47c5d;color:#b4502f}
+.rep-btn.has{background:#fbe3da;border-color:#e47c5d}
+.rep-sum{color:#8a3a22}
+.extra-note{background:#f0ddaa;color:#5a4410}
+#tab-opheader>div,.summary-section,.flight-card,.truck-card,.summary-stat{border:2px solid #a3d5d1!important;box-shadow:0 2px 6px rgba(20,43,59,.09)}
+#tab-opheader>div{border-top:6px solid #1792a4!important}
+.summary-title{background:#142b3b;color:#fff;border-left:6px solid #5ebdb2}
+.summary-n{color:#1792a4}
+.fs{background:#e3f1ef;border:1px solid #a3d5d1}
+.truck-title,.log-view>div:first-child,.trucks-view>div:first-child{color:#142b3b}
+.truck-count{color:#1792a4}
+.log-row{border:2px solid #a3d5d1;border-left:6px solid #1792a4}
+#report-box{border-top:6px solid #e47c5d}
+#report-box h3{color:#8a3a22}
+.extra-btn{background:#1792a4}
+.extra-btn.sec{background:#c8e5e3;color:#142b3b}
+
+/* ===== v35: estilo sobrio y suave ===== */
+:root{--bg:#f3f7f7;--font:'Segoe UI',system-ui,-apple-system,sans-serif}
+body{background:#f3f7f7;letter-spacing:.005em}
+.app-header{background:#142b3b;box-shadow:none;border-bottom:2px solid #1792a4;padding:14px 24px}
+.app-header .header-left h1{font-weight:600;font-size:15px;letter-spacing:.02em}
+.header-right button{border:1px solid rgba(255,255,255,.3)!important;font-weight:400}
+.tab-nav{background:#fff;border-bottom:1px solid #dbe7e6;padding:0 16px}
+.tab-btn{color:#6b7f88;font-weight:500;font-size:13px;border-bottom:2px solid transparent;padding:13px 16px}
+.tab-btn:hover{color:#142b3b}
+.tab-btn.active{color:#142b3b;background:transparent;border-bottom-color:#1792a4;font-weight:600}
+#tab-btn-excel{background:transparent!important;color:#1792a4!important}
+.filters{background:#fff;border-bottom:1px solid #dbe7e6;padding:14px 24px}
+.search-box,.filter-select{border:1px solid #d3e1e0;background:#f8fbfb;border-radius:8px}
+.count-badge{background:transparent;color:#47606b;font-weight:500;padding:0}
+.pax-cards{gap:14px;padding:20px 24px;max-width:1400px;margin:0 auto}
+.plane-hdr{background:transparent;color:#47606b;border:none;border-bottom:1px solid #cfe0df;border-radius:0;padding:14px 2px 6px;margin-top:8px;font-weight:600;letter-spacing:.14em;font-size:11px}
+.pax-card{background:#fff;border:1px solid #dbe7e6;border-left:1px solid #dbe7e6;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(20,43,59,.05);position:relative;transition:box-shadow .2s}
+.pax-card:hover{box-shadow:0 4px 14px rgba(20,43,59,.09)}
+.pax-card::before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:0 3px 3px 0;background:#cfe0df}
+.pax-card.ok{border-color:#dbe7e6}
+.pax-card.ok::before{background:#5ebdb2}
+.pax-card.has-alert{background:#fffdf6;border-color:#eadfbb}
+.pax-card.has-alert::before{background:#d9bf6c}
+.pax-card.has-report{border-color:#f0cdc1;box-shadow:0 1px 3px rgba(228,124,93,.12)}
+.pax-card.has-report::before{background:#e47c5d}
+.pax-card-name{font-size:15px;font-weight:600;color:#142b3b;border:none;padding:0;margin-bottom:6px;letter-spacing:.01em}
+.pax-card-meta{gap:4px 14px;margin-bottom:12px}
+.pax-card-meta span{background:transparent;padding:0;border-radius:0;color:#6b7f88;font-weight:400;font-size:12px}
+.pax-card-meta span.tag-pill{padding:1px 9px!important;border-radius:20px;font-size:10px;font-weight:700!important}
+.pc-lbl{font-weight:500;color:#8aa0a8;letter-spacing:.08em;font-size:10px}
+.pax-card-row select,.pax-card-row input,.pc-notes{border:1px solid #d3e1e0;background:#f8fbfb;border-radius:8px;padding:8px 10px}
+.pax-card-row input.pax-card-bags{font-weight:600;font-size:15px}
+.status-sel{border-radius:8px}
+.pc-notes{font-size:12px;color:#47606b}
+.booking-note,.alert-note,.extra-note{border-radius:6px;font-size:11px}
+.alert-note{background:#fbe9e2;color:#8a3a22}
+.rep-btn{background:transparent;border:1px solid #d3e1e0;color:#6b7f88;font-weight:500;border-radius:8px;font-size:12px;padding:8px}
+.rep-btn:hover{border-color:#e47c5d;color:#b4502f}
+.rep-btn.has{background:#fdf1ec;border:1px solid #f0cdc1;color:#b4502f;font-weight:600}
+#tab-opheader>div,.summary-section,.flight-card,.truck-card,.summary-stat{border:1px solid #dbe7e6!important;border-radius:10px;box-shadow:0 1px 3px rgba(20,43,59,.05)!important}
+#tab-opheader>div{border-top:1px solid #dbe7e6!important}
+.summary-title{background:transparent;color:#47606b;border:none;border-bottom:1px solid #cfe0df;border-radius:0;padding:4px 2px 8px;font-weight:600;letter-spacing:.14em;font-size:11px}
+.summary-n{color:#142b3b;font-weight:600}
+.fs{background:#f3f7f7;border:none;border-radius:8px}
+.truck-count{color:#142b3b;font-weight:600}
+.truck-btn{border:1px solid #d3e1e0;background:#f8fbfb}
+.truck-total-row{background:#eaf4f3}
+.log-row{border:none;border-bottom:1px solid #e2ecec;border-radius:0;background:transparent;box-shadow:none;padding:10px 4px;margin:0}
+.log-who{color:#1792a4}
+.op-field input,.time-row input,.op-obs{border:1px solid #d3e1e0;background:#f8fbfb;border-radius:8px}
+.now-btn{background:#fff;border:1px solid #d3e1e0;border-radius:8px;color:#47606b}
+#extra-box,#report-box{border-radius:14px;border-top:none;box-shadow:0 20px 50px rgba(20,43,59,.25)}
+#report-box h3{color:#142b3b;font-weight:600}
+.extra-btn{background:#142b3b;border-radius:8px;font-weight:600}
+.extra-btn.sec{background:#eaf4f3;color:#142b3b}
+#report-box .extra-btn[onclick="saveReport()"]{background:#1792a4!important}
+.rep-ph{border-radius:8px}
+@media(max-width:700px){.pax-cards{padding:12px}.filters{padding:12px}}
+
+/* v35: encabezado azul */
+.app-header{background:linear-gradient(135deg,#1a5f9e 0%,#1792a4 100%)!important;border-bottom:none!important}
+.app-header .header-left p{color:#d3ecf0}
+.header-left small{color:#bfe3ea!important}
+.extra-btn{background:#1a5f9e}
+
+/* v35: lista vertical */
+.pax-cards{grid-template-columns:1fr!important;max-width:860px;gap:12px}
+@media(min-width:760px){
+ .pax-card{display:grid;grid-template-columns:1.1fr 1.4fr;column-gap:24px;align-items:start}
+ .pax-card>.pax-card-name,.pax-card>.pax-card-meta{grid-column:1}
+ .pax-card>.pax-card-row,.pax-card>.pc-notes{grid-column:2}
+ .pax-card>.pax-card-name{grid-row:1}.pax-card>.pax-card-meta{grid-row:2}
+ .pax-card>.pax-card-row{grid-row:1/3}
+ .pax-card>.pc-notes{grid-row:3;margin-top:6px}
+ .pax-card>.booking-note,.pax-card>.alert-note,.pax-card>.extra-note,.pax-card>.log-note,.pax-card>.rep-btn,.pax-card>.rep-sum{grid-column:1/-1}
+ .pax-card>.rep-btn{margin-top:8px}
+}
+
+/* v35: tarjetas bajas y redondeadas */
+.pax-cards{max-width:1000px;gap:8px}
+.pax-card{border-radius:22px!important;padding:9px 22px 9px 26px!important}
+.pax-card::before{top:12px;bottom:12px;left:10px;width:4px;border-radius:4px}
+.pax-card-name{margin-bottom:0;font-size:14.5px}
+.pax-card-meta{margin-bottom:0;gap:2px 12px}
+.pax-card-row select,.pax-card-row input,.pc-notes{border-radius:20px!important;padding:6px 12px!important}
+.pc-lbl{display:none}
+.pc-notes{margin:0!important}
+.rep-btn{border-radius:20px!important;margin:0!important;padding:6px 14px!important;white-space:nowrap;width:auto!important}
+.booking-note,.alert-note,.extra-note,.rep-sum,.log-note{border-radius:20px}
+.plane-hdr{border-radius:0}
+@media(min-width:760px){
+ .pax-card{grid-template-columns:minmax(150px,1.1fr) minmax(210px,1.3fr) minmax(110px,1fr) auto!important;column-gap:12px!important;align-items:center!important}
+ .pax-card>.pax-card-name{grid-column:1;grid-row:1}
+ .pax-card>.pax-card-meta{grid-column:1;grid-row:2}
+ .pax-card>.pax-card-row{grid-column:2;grid-row:1/3!important;margin:0!important;align-items:center}
+ .pax-card>.pc-notes{grid-column:3;grid-row:1/3!important;margin:0!important}
+ .pax-card>.rep-btn{grid-column:4;grid-row:1/3!important;margin:0!important}
+ .pax-card>.booking-note,.pax-card>.alert-note,.pax-card>.extra-note,.pax-card>.log-note,.pax-card>.rep-sum{grid-column:1/-1;justify-self:start;margin-top:4px}
+}
+@media(max-width:759px){.pax-card{padding:10px 16px 10px 22px!important}.pax-card-row{margin:6px 0!important}.pc-notes{margin-bottom:6px!important}}
+
+/* v35: barra de pestañas y filtros con el color de "Equipaje OK" */
+.tab-nav,.filters{background:#d3efe9!important;border-bottom:1px solid #b5ddd4!important}
+.tab-btn{color:#35706a}
+.tab-btn:hover{color:#0f5a50}
+.tab-btn.active{color:#0f5a50;border-bottom-color:#2f9e8f;background:transparent}
+#tab-btn-excel{color:#0f5a50!important}
+.count-badge{color:#0f5a50}
+.search-box,.filter-select{background:#fff;border-color:#b5ddd4}
 </style>
 <script>/*! xlsx.js (C) 2013-present SheetJS -- http://sheetjs.com */
 var DO_NOT_EXPORT_CODEPAGE=true;var cptable={version:"1.15.0"};cptable[437]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜ¢£¥₧ƒáíóúñÑªº¿⌐¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[620]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàąçêëèïîćÄĄĘęłôöĆûùŚÖÜ¢Ł¥śƒŹŻóÓńŃźż¿⌐¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[737]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρσςτυφχψ░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀ωάέήϊίόύϋώΆΈΉΊΌΎΏ±≥≤ΪΫ÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[850]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ðÐÊËÈıÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµþÞÚÛÙýÝ¯´­±‗¾¶§÷¸°¨·¹³²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[852]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäůćçłëŐőîŹÄĆÉĹĺôöĽľŚśÖÜŤťŁ×čáíóúĄąŽžĘę¬źČş«»░▒▓│┤ÁÂĚŞ╣║╗╝Żż┐└┴┬├─┼Ăă╚╔╩╦╠═╬¤đĐĎËďŇÍÎě┘┌█▄ŢŮ▀ÓßÔŃńňŠšŔÚŕŰýÝţ´­˝˛ˇ˘§÷¸°¨˙űŘř■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[857]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèïîıÄÅÉæÆôöòûùİÖÜø£ØŞşáíóúñÑĞğ¿®¬½¼¡«»░▒▓│┤ÁÂÀ©╣║╗╝¢¥┐└┴┬├─┼ãÃ╚╔╩╦╠═╬¤ºªÊËÈ�ÍÎÏ┘┌█▄¦Ì▀ÓßÔÒõÕµ�×ÚÛÙìÿ¯´­±�¾¶§÷¸°¨·¹³²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[861]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèÐðÞÄÅÉæÆôöþûÝýÖÜø£Ø₧ƒáíóúÁÍÓÚ¿⌐¬½¼¡«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[865]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø₧ƒáíóúñÑªº¿⌐¬½¼¡«¤░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[866]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдежзийклмноп░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀рстуфхцчшщъыьэюяЁёЄєЇїЎў°∙·√№¤■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[874]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~€����…�����������‘’“”•–—�������� กขฃคฅฆงจฉชซฌญฎฏฐฑฒณดตถทธนบปผฝพฟภมยรฤลฦวศษสหฬอฮฯะัาำิีึืฺุู����฿เแโใไๅๆ็่้๊๋์ํ๎๏๐๑๒๓๔๕๖๗๘๙๚๛����",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[895]=function(){var e="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~ČüéďäĎŤčěĚĹÍľǪÄÁÉžŽôöÓůÚýÖÜŠĽÝŘťáíóúňŇŮÔšřŕŔ¼§«»░▒▓│┤╡╢╖╕╣║╗╝╜╛┐└┴┬├─┼╞╟╚╔╩╦╠═╬╧╨╤╥╙╘╒╓╫╪┘┌█▄▌▐▀αßΓπΣσµτΦΘΩδ∞φε∩≡±≥≤⌠⌡÷≈°∙·√ⁿ²■ ",r=[],t={};for(var a=0;a!=e.length;++a){if(e.charCodeAt(a)!==65533)t[e.charAt(a)]=a;r[a]=e.charAt(a)}return{enc:t,dec:r}}();cptable[932]=function(){var e=[],r={},t=[],a;t[0]="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~���������������������������������｡｢｣､･ｦｧｨｩｪｫｬｭｮｯｰｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝﾞﾟ��������������������������������".split("");for(a=0;a!=t[0].length;++a)if(t[0][a].charCodeAt(0)!==65533){r[t[0][a]]=0+a;e[0+a]=t[0][a]}t[129]="����������������������������������������������������������������　、。，．・：；？！゛゜´｀¨＾￣＿ヽヾゝゞ〃仝々〆〇ー―‐／＼～∥｜…‥‘’“”（）〔〕［］｛｝〈〉《》「」『』【】＋－±×�÷＝≠＜＞≦≧∞∴♂♀°′″℃￥＄￠￡％＃＆＊＠§☆★○●◎◇◆□■△▲▽▼※〒→←↑↓〓�����������∈∋⊆⊇⊂⊃∪∩��������∧∨￢⇒⇔∀∃�����������∠⊥⌒∂∇≡≒≪≫√∽∝∵∫∬�������Å‰♯♭♪†‡¶����◯���".split("");for(a=0;a!=t[129].length;++a)if(t[129][a].charCodeAt(0)!==65533){r[t[129][a]]=33024+a;e[33024+a]=t[129][a]}t[130]="�������������������������������������������������������������������������������０１２３４５６７８９�������ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ�������ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ����ぁあぃいぅうぇえぉおかがきぎくぐけげこごさざしじすずせぜそぞただちぢっつづてでとどなにぬねのはばぱひびぴふぶぷへべぺほぼぽまみむめもゃやゅゆょよらりるれろゎわゐゑをん��������������".split("");for(a=0;a!=t[130].length;++a)if(t[130][a].charCodeAt(0)!==65533){r[t[130][a]]=33280+a;e[33280+a]=t[130][a]}t[131]="����������������������������������������������������������������ァアィイゥウェエォオカガキギクグケゲコゴサザシジスズセゼソゾタダチヂッツヅテデトドナニヌネノハバパヒビピフブプヘベペホボポマミ�ムメモャヤュユョヨラリルレロヮワヰヱヲンヴヵヶ��������ΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩ��������αβγδεζηθικλμνξοπρστυφχψω�����������������������������������������".split("");for(a=0;a!=t[131].length;++a)if(t[131][a].charCodeAt(0)!==65533){r[t[131][a]]=33536+a;e[33536+a]=t[131][a]}t[132]="����������������������������������������������������������������АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ���������������абвгдеёжзийклмн�опрстуфхцчшщъыьэюя�������������─│┌┐┘└├┬┤┴┼━┃┏┓┛┗┣┳┫┻╋┠┯┨┷┿┝┰┥┸╂�����������������������������������������������������������������".split("");for(a=0;a!=t[132].length;++a)if(t[132][a].charCodeAt(0)!==65533){r[t[132][a]]=33792+a;e[33792+a]=t[132][a]}t[135]="����������������������������������������������������������������①②③④⑤⑥⑦⑧⑨⑩⑪⑫⑬⑭⑮⑯⑰⑱⑲⑳ⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ�㍉㌔㌢㍍㌘㌧㌃㌶㍑㍗㌍㌦㌣㌫㍊㌻㎜㎝㎞㎎㎏㏄㎡��������㍻�〝〟№㏍℡㊤㊥㊦㊧㊨㈱㈲㈹㍾㍽㍼≒≡∫∮∑√⊥∠∟⊿∵∩∪���������������������������������������������������������������������������������������������������".split("");for(a=0;a!=t[135].length;++a)if(t[135][a].charCodeAt(0)!==65533){r[t[135][a]]=34560+a;e[34560+a]=t[135][a]}t[136]="���������������������������������������������������������������������������������������������������������������������������������������������������������������亜唖娃阿哀愛挨姶逢葵茜穐悪握渥旭葦芦鯵梓圧斡扱宛姐虻飴絢綾鮎或粟袷安庵按暗案闇鞍杏以伊位依偉囲夷委威尉惟意慰易椅為畏異移維緯胃萎衣謂違遺医井亥域育郁磯一壱溢逸稲茨芋鰯允印咽員因姻引飲淫胤蔭���".split("");for(a=0;a!=t[136].length;++a)if(t[136][a].charCodeAt(0)!==65533){r[t[136][a]]=34816+a;e[34816+a]=t[136][a]}t[137]="����������������������������������������������������������������院陰隠韻吋右宇烏羽迂雨卯鵜窺丑碓臼渦嘘唄欝蔚鰻姥厩浦瓜閏噂云運雲荏餌叡営嬰影映曳栄永泳洩瑛盈穎頴英衛詠鋭液疫益駅悦謁越閲榎厭円�園堰奄宴延怨掩援沿演炎焔煙燕猿縁艶苑薗遠鉛鴛塩於汚甥凹央奥往応押旺横欧殴王翁襖鴬鴎黄岡沖荻億屋憶臆桶牡乙俺卸恩温穏音下化仮何伽価佳加可嘉夏嫁家寡科暇果架歌河火珂禍禾稼箇花苛茄荷華菓蝦課嘩貨迦過霞蚊俄峨我牙画臥芽蛾賀雅餓駕介会解回塊壊廻快怪悔恢懐戒拐改���".split("");for(a=0;a!=t[137].length;++a)if(t[137][a].charCodeAt(0)!==65533){r[t[137][a]]=35072+a;e[35072+a]=t[137][a]}t[138]="����������������������������������������������������������������魁晦械海灰界皆絵芥蟹開階貝凱劾外咳害崖慨概涯碍蓋街該鎧骸浬馨蛙垣柿蛎鈎劃嚇各廓拡撹格核殻獲確穫覚角赫較郭閣隔革学岳楽額顎掛笠樫�橿梶鰍潟割喝恰括活渇滑葛褐轄且鰹叶椛樺鞄株兜竃蒲釜鎌噛鴨栢茅萱粥刈苅瓦乾侃冠寒刊勘勧巻喚堪姦完官寛干幹患感慣憾換敢柑桓棺款歓汗漢澗潅環甘監看竿管簡緩缶翰肝艦莞観諌貫還鑑間閑関陥韓館舘丸含岸巌玩癌眼岩翫贋雁頑顔願企伎危喜器基奇嬉寄岐希幾忌揮机旗既期棋棄���".split("");for(a=0;a!=t[138].length;++a)if(t[138][a].charCodeAt(0)!==65533){r[t[138][a]]=35328+a;e[35328+a]=t[138][a]}t[139]="����������������������������������������������������������������機帰毅気汽畿祈季稀紀徽規記貴起軌輝飢騎鬼亀偽儀妓宜戯技擬欺犠疑祇義蟻誼議掬菊鞠吉吃喫桔橘詰砧杵黍却客脚虐逆丘久仇休及吸宮弓急救�朽求汲泣灸球究窮笈級糾給旧牛去居巨拒拠挙渠虚許距鋸漁禦魚亨享京供侠僑兇競共凶協匡卿叫喬境峡強彊怯恐恭挟教橋況狂狭矯胸脅興蕎郷鏡響饗驚仰凝尭暁業局曲極玉桐粁僅勤均巾錦斤欣欽琴禁禽筋緊芹菌衿襟謹近金吟銀九倶句区狗玖矩苦躯駆駈駒具愚虞喰空偶寓遇隅串櫛釧屑屈���".split("");for(a=0;a!=t[139].length;++a)if(t[139][a].charCodeAt(0)!==65533){r[t[139][a]]=35584+a;e[35584+a]=t[139][a]}t[140]="����������������������������������������������������������������掘窟沓靴轡窪熊隈粂栗繰桑鍬勲君薫訓群軍郡卦袈祁係傾刑兄啓圭珪型契形径恵慶慧憩掲携敬景桂渓畦稽系経継繋罫茎荊蛍計詣警軽頚鶏芸迎鯨�劇戟撃激隙桁傑欠決潔穴結血訣月件倹倦健兼券剣喧圏堅嫌建憲懸拳捲検権牽犬献研硯絹県肩見謙賢軒遣鍵険顕験鹸元原厳幻弦減源玄現絃舷言諺限乎個古呼固姑孤己庫弧戸故枯湖狐糊袴股胡菰虎誇跨鈷雇顧鼓五互伍午呉吾娯後御悟梧檎瑚碁語誤護醐乞鯉交佼侯候倖光公功効勾厚口向���".split("");for(a=0;a!=t[140].length;++a)if(t[140][a].charCodeAt(0)!==65533){r[t[140][a]]=35840+a;e[35840+a]=t[140][a]}t[141]="����������������������������������������������������������������后喉坑垢好孔孝宏工巧巷幸広庚康弘恒慌抗拘控攻昂晃更杭校梗構江洪浩港溝甲皇硬稿糠紅紘絞綱耕考肯肱腔膏航荒行衡講貢購郊酵鉱砿鋼閤降�項香高鴻剛劫号合壕拷濠豪轟麹克刻告国穀酷鵠黒獄漉腰甑忽惚骨狛込此頃今困坤墾婚恨懇昏昆根梱混痕紺艮魂些佐叉唆嵯左差査沙瑳砂詐鎖裟坐座挫債催再最哉塞妻宰彩才採栽歳済災采犀砕砦祭斎細菜裁載際剤在材罪財冴坂阪堺榊肴咲崎埼碕鷺作削咋搾昨朔柵窄策索錯桜鮭笹匙冊刷���".split("");for(a=0;a!=t[141].length;++a)if(t[141][a].charCodeAt(0)!==65533){r[t[141][a]]=36096+a;e[36096+a]=t[141][a]}t[142]="����������������������������������������������������������������察拶撮擦札殺薩雑皐鯖捌錆鮫皿晒三傘参山惨撒散桟燦珊産算纂蚕讃賛酸餐斬暫残仕仔伺使刺司史嗣四士始姉姿子屍市師志思指支孜斯施旨枝止�死氏獅祉私糸紙紫肢脂至視詞詩試誌諮資賜雌飼歯事似侍児字寺慈持時次滋治爾璽痔磁示而耳自蒔辞汐鹿式識鴫竺軸宍雫七叱執失嫉室悉湿漆疾質実蔀篠偲柴芝屡蕊縞舎写射捨赦斜煮社紗者謝車遮蛇邪借勺尺杓灼爵酌釈錫若寂弱惹主取守手朱殊狩珠種腫趣酒首儒受呪寿授樹綬需囚収周���".split("");for(a=0;a!=t[142].length;++a)if(t[142][a].charCodeAt(0)!==65533){r[t[142][a]]=36352+a;e[36352+a]=t[142][a]}t[143]="����������������������������������������������������������������宗就州修愁拾洲秀秋終繍習臭舟蒐衆襲讐蹴輯週酋酬集醜什住充十従戎柔汁渋獣縦重銃叔夙宿淑祝縮粛塾熟出術述俊峻春瞬竣舜駿准循旬楯殉淳�準潤盾純巡遵醇順処初所暑曙渚庶緒署書薯藷諸助叙女序徐恕鋤除傷償勝匠升召哨商唱嘗奨妾娼宵将小少尚庄床廠彰承抄招掌捷昇昌昭晶松梢樟樵沼消渉湘焼焦照症省硝礁祥称章笑粧紹肖菖蒋蕉衝裳訟証詔詳象賞醤鉦鍾鐘障鞘上丈丞乗冗剰城場壌嬢常情擾条杖浄状畳穣蒸譲醸錠嘱埴飾���".split("");for(a=0;a!=t[143].length;++a)if(t[143][a].charCodeAt(0)!==65533){r[t[143][a]]=36608+a;e[36608+a]=t[143][a]}t[144]="����������������������������������������������������������������拭植殖燭織職色触食蝕辱尻伸信侵唇娠寝審心慎振新晋森榛浸深申疹真神秦紳臣芯薪親診身辛進針震人仁刃塵壬尋甚尽腎訊迅陣靭笥諏須酢図厨�逗吹垂帥推水炊睡粋翠衰遂酔錐錘随瑞髄崇嵩数枢趨雛据杉椙菅頗雀裾澄摺寸世瀬畝是凄制勢姓征性成政整星晴棲栖正清牲生盛精聖声製西誠誓請逝醒青静斉税脆隻席惜戚斥昔析石積籍績脊責赤跡蹟碩切拙接摂折設窃節説雪絶舌蝉仙先千占宣専尖川戦扇撰栓栴泉浅洗染潜煎煽旋穿箭線���".split("");for(a=0;a!=t[144].length;++a)if(t[144][a].charCodeAt(0)!==65533){r[t[144][a]]=36864+a;e[36864+a]=t[144][a]}t[145]="����������������������������������������������������������������繊羨腺舛船薦詮賎践選遷銭銑閃鮮前善漸然全禅繕膳糎噌塑岨措曾曽楚狙疏疎礎祖租粗素組蘇訴阻遡鼠僧創双叢倉喪壮奏爽宋層匝惣想捜掃挿掻�操早曹巣槍槽漕燥争痩相窓糟総綜聡草荘葬蒼藻装走送遭鎗霜騒像増憎臓蔵贈造促側則即息捉束測足速俗属賊族続卒袖其揃存孫尊損村遜他多太汰詑唾堕妥惰打柁舵楕陀駄騨体堆対耐岱帯待怠態戴替泰滞胎腿苔袋貸退逮隊黛鯛代台大第醍題鷹滝瀧卓啄宅托択拓沢濯琢託鐸濁諾茸凧蛸只���".split("");for(a=0;a!=t[145].length;++a)if(t[145][a].charCodeAt(0)!==65533){r[t[145][a]]=37120+a;e[37120+a]=t[145][a]}t[146]="����������������������������������������������������������������叩但達辰奪脱巽竪辿棚谷狸鱈樽誰丹単嘆坦担探旦歎淡湛炭短端箪綻耽胆蛋誕鍛団壇弾断暖檀段男談値知地弛恥智池痴稚置致蜘遅馳築畜竹筑蓄�逐秩窒茶嫡着中仲宙忠抽昼柱注虫衷註酎鋳駐樗瀦猪苧著貯丁兆凋喋寵帖帳庁弔張彫徴懲挑暢朝潮牒町眺聴脹腸蝶調諜超跳銚長頂鳥勅捗直朕沈珍賃鎮陳津墜椎槌追鎚痛通塚栂掴槻佃漬柘辻蔦綴鍔椿潰坪壷嬬紬爪吊釣鶴亭低停偵剃貞呈堤定帝底庭廷弟悌抵挺提梯汀碇禎程締艇訂諦蹄逓���".split("");for(a=0;a!=t[146].length;++a)if(t[146][a].charCodeAt(0)!==65533){r[t[146][a]]=37376+a;e[37376+a]=t[146][a]}t[147]="����������������������������������������������������������������邸鄭釘鼎泥摘擢敵滴的笛適鏑溺哲徹撤轍迭鉄典填天展店添纏甜貼転顛点伝殿澱田電兎吐堵塗妬屠徒斗杜渡登菟賭途都鍍砥砺努度土奴怒倒党冬�凍刀唐塔塘套宕島嶋悼投搭東桃梼棟盗淘湯涛灯燈当痘祷等答筒糖統到董蕩藤討謄豆踏逃透鐙陶頭騰闘働動同堂導憧撞洞瞳童胴萄道銅峠鴇匿得徳涜特督禿篤毒独読栃橡凸突椴届鳶苫寅酉瀞噸屯惇敦沌豚遁頓呑曇鈍奈那内乍凪薙謎灘捺鍋楢馴縄畷南楠軟難汝二尼弐迩匂賑肉虹廿日乳入���".split("");for(a=0;a!=t[147].length;++a)if(t[147][a].charCodeAt(0)!==65533){r[t[147][a]]=37632+a;e[37632+a]=t[147][a]}t[148]="����������������������������������������������������������������如尿韮任妊忍認濡禰祢寧葱猫熱年念捻撚燃粘乃廼之埜嚢悩濃納能脳膿農覗蚤巴把播覇杷波派琶破婆罵芭馬俳廃拝排敗杯盃牌背肺輩配倍培媒梅�楳煤狽買売賠陪這蝿秤矧萩伯剥博拍柏泊白箔粕舶薄迫曝漠爆縛莫駁麦函箱硲箸肇筈櫨幡肌畑畠八鉢溌発醗髪伐罰抜筏閥鳩噺塙蛤隼伴判半反叛帆搬斑板氾汎版犯班畔繁般藩販範釆煩頒飯挽晩番盤磐蕃蛮匪卑否妃庇彼悲扉批披斐比泌疲皮碑秘緋罷肥被誹費避非飛樋簸備尾微枇毘琵眉美���".split("");for(a=0;a!=t[148].length;++a)if(t[148][a].charCodeAt(0)!==65533){r[t[148][a]]=37888+a;e[37888+a]=t[148][a]}t[149]="����������������������������������������������������������������鼻柊稗匹疋髭彦膝菱肘弼必畢筆逼桧姫媛紐百謬俵彪標氷漂瓢票表評豹廟描病秒苗錨鋲蒜蛭鰭品彬斌浜瀕貧賓頻敏瓶不付埠夫婦富冨布府怖扶敷�斧普浮父符腐膚芙譜負賦赴阜附侮撫武舞葡蕪部封楓風葺蕗伏副復幅服福腹複覆淵弗払沸仏物鮒分吻噴墳憤扮焚奮粉糞紛雰文聞丙併兵塀幣平弊柄並蔽閉陛米頁僻壁癖碧別瞥蔑箆偏変片篇編辺返遍便勉娩弁鞭保舗鋪圃捕歩甫補輔穂募墓慕戊暮母簿菩倣俸包呆報奉宝峰峯崩庖抱捧放方朋���".split("");for(a=0;a!=t[149].length;++a)if(t[149][a].charCodeAt(0)!==65533){r[t[149][a]]=38144+a;e[38144+a]=t[149][a]}t[150]="����������������������������������������������������������������法泡烹砲縫胞芳萌蓬蜂褒訪豊邦鋒飽鳳鵬乏亡傍剖坊妨帽忘忙房暴望某棒冒紡肪膨謀貌貿鉾防吠頬北僕卜墨撲朴牧睦穆釦勃没殆堀幌奔本翻凡盆�摩磨魔麻埋妹昧枚毎哩槙幕膜枕鮪柾鱒桝亦俣又抹末沫迄侭繭麿万慢満漫蔓味未魅巳箕岬密蜜湊蓑稔脈妙粍民眠務夢無牟矛霧鵡椋婿娘冥名命明盟迷銘鳴姪牝滅免棉綿緬面麺摸模茂妄孟毛猛盲網耗蒙儲木黙目杢勿餅尤戻籾貰問悶紋門匁也冶夜爺耶野弥矢厄役約薬訳躍靖柳薮鑓愉愈油癒���".split("");for(a=0;a!=t[150].length;++a)if(t[150][a].charCodeAt(0)!==65533){r[t[150][a]]=38400+a;e[38400+a]=t[150][a]}t[151]="����������������������������������������������������������������諭輸唯佑優勇友宥幽悠憂揖有柚湧涌猶猷由祐裕誘遊邑郵雄融夕予余与誉輿預傭幼妖容庸揚揺擁曜楊様洋溶熔用窯羊耀葉蓉要謡踊遥陽養慾抑欲�沃浴翌翼淀羅螺裸来莱頼雷洛絡落酪乱卵嵐欄濫藍蘭覧利吏履李梨理璃痢裏裡里離陸律率立葎掠略劉流溜琉留硫粒隆竜龍侶慮旅虜了亮僚両凌寮料梁涼猟療瞭稜糧良諒遼量陵領力緑倫厘林淋燐琳臨輪隣鱗麟瑠塁涙累類令伶例冷励嶺怜玲礼苓鈴隷零霊麗齢暦歴列劣烈裂廉恋憐漣煉簾練聯���".split("");for(a=0;a!=t[151].length;++a)if(t[151][a].charCodeAt(0)!==65533){r[t[151][a]]=38656+a;e[38656+a]=t[151][a]}t[152]="����������������������������������������������������������������蓮連錬呂魯櫓炉賂路露労婁廊弄朗楼榔浪漏牢狼篭老聾蝋郎六麓禄肋録論倭和話歪賄脇惑枠鷲亙亘鰐詫藁蕨椀湾碗腕��������������������������������������������弌丐丕个丱丶丼丿乂乖乘亂亅豫亊舒弍于亞亟亠亢亰亳亶从仍仄仆仂仗仞仭仟价伉佚估佛佝佗佇佶侈侏侘佻佩佰侑佯來侖儘俔俟俎俘俛俑俚俐俤俥倚倨倔倪倥倅伜俶倡倩倬俾俯們倆偃假會偕偐偈做偖偬偸傀傚傅傴傲���".split("");for(a=0;a!=t[152].length;++a)if(t[152][a].charCodeAt(0)!==65533){r[t[152][a]]=38912+a;e[38912+a]=t[152][a]}t[153]="����������������������������������������������������������������僉僊傳僂僖僞僥僭僣僮價僵儉儁儂儖儕儔儚儡儺儷儼儻儿兀兒兌兔兢竸兩兪兮冀冂囘册冉冏冑冓冕冖冤冦冢冩冪冫决冱冲冰况冽凅凉凛几處凩凭�凰凵凾刄刋刔刎刧刪刮刳刹剏剄剋剌剞剔剪剴剩剳剿剽劍劔劒剱劈劑辨辧劬劭劼劵勁勍勗勞勣勦飭勠勳勵勸勹匆匈甸匍匐匏匕匚匣匯匱匳匸區卆卅丗卉卍凖卞卩卮夘卻卷厂厖厠厦厥厮厰厶參簒雙叟曼燮叮叨叭叺吁吽呀听吭吼吮吶吩吝呎咏呵咎呟呱呷呰咒呻咀呶咄咐咆哇咢咸咥咬哄哈咨���".split("");for(a=0;a!=t[153].length;++a)if(t[153][a].charCodeAt(0)!==65533){r[t[153][a]]=39168+a;e[39168+a]=t[153][a]}t[154]="����������������������������������������������������������������咫哂咤咾咼哘哥哦唏唔哽哮哭哺哢唹啀啣啌售啜啅啖啗唸唳啝喙喀咯喊喟啻啾喘喞單啼喃喩喇喨嗚嗅嗟嗄嗜嗤嗔嘔嗷嘖嗾嗽嘛嗹噎噐營嘴嘶嘲嘸�噫噤嘯噬噪嚆嚀嚊嚠嚔嚏嚥嚮嚶嚴囂嚼囁囃囀囈囎囑囓囗囮囹圀囿圄圉圈國圍圓團圖嗇圜圦圷圸坎圻址坏坩埀垈坡坿垉垓垠垳垤垪垰埃埆埔埒埓堊埖埣堋堙堝塲堡塢塋塰毀塒堽塹墅墹墟墫墺壞墻墸墮壅壓壑壗壙壘壥壜壤壟壯壺壹壻壼壽夂夊夐夛梦夥夬夭夲夸夾竒奕奐奎奚奘奢奠奧奬奩���".split("");for(a=0;a!=t[154].length;++a)if(t[154][a].charCodeAt(0)!==65533){r[t[154][a]]=39424+a;e[39424+a]=t[154][a]}t[155]="����������������������������������������������������������������奸妁妝佞侫妣妲姆姨姜妍姙姚娥娟娑娜娉娚婀婬婉娵娶婢婪媚媼媾嫋嫂媽嫣嫗嫦嫩嫖嫺嫻嬌嬋嬖嬲嫐嬪嬶嬾孃孅孀孑孕孚孛孥孩孰孳孵學斈孺宀�它宦宸寃寇寉寔寐寤實寢寞寥寫寰寶寳尅將專對尓尠尢尨尸尹屁屆屎屓屐屏孱屬屮乢屶屹岌岑岔妛岫岻岶岼岷峅岾峇峙峩峽峺峭嶌峪崋崕崗嵜崟崛崑崔崢崚崙崘嵌嵒嵎嵋嵬嵳嵶嶇嶄嶂嶢嶝嶬嶮嶽嶐嶷嶼巉巍巓巒巖巛巫已巵帋帚帙帑帛帶帷幄幃幀幎幗幔幟幢幤幇幵并幺麼广庠廁廂廈廐廏���".split("");for(a=0;a!=t[155].length;++a)if(t[155][a].charCodeAt(0)!==65533){r[t[155][a]]=39680+a;e[39680+a]=t[155][a]}t[156]="����������������������������������������������������������������廖廣廝廚廛廢廡廨廩廬廱廳廰廴廸廾弃弉彝彜弋弑弖弩弭弸彁彈彌彎弯彑彖彗彙彡彭彳彷徃徂彿徊很徑徇從徙徘徠徨徭徼忖忻忤忸忱忝悳忿怡恠�怙怐怩怎怱怛怕怫怦怏怺恚恁恪恷恟恊恆恍恣恃恤恂恬恫恙悁悍惧悃悚悄悛悖悗悒悧悋惡悸惠惓悴忰悽惆悵惘慍愕愆惶惷愀惴惺愃愡惻惱愍愎慇愾愨愧慊愿愼愬愴愽慂慄慳慷慘慙慚慫慴慯慥慱慟慝慓慵憙憖憇憬憔憚憊憑憫憮懌懊應懷懈懃懆憺懋罹懍懦懣懶懺懴懿懽懼懾戀戈戉戍戌戔戛���".split("");for(a=0;a!=t[156].length;++a)if(t[156][a].charCodeAt(0)!==65533){r[t[156][a]]=39936+a;e[39936+a]=t[156][a]}t[157]="����������������������������������������������������������������戞戡截戮戰戲戳扁扎扞扣扛扠扨扼抂抉找抒抓抖拔抃抔拗拑抻拏拿拆擔拈拜拌拊拂拇抛拉挌拮拱挧挂挈拯拵捐挾捍搜捏掖掎掀掫捶掣掏掉掟掵捫�捩掾揩揀揆揣揉插揶揄搖搴搆搓搦搶攝搗搨搏摧摯摶摎攪撕撓撥撩撈撼據擒擅擇撻擘擂擱擧舉擠擡抬擣擯攬擶擴擲擺攀擽攘攜攅攤攣攫攴攵攷收攸畋效敖敕敍敘敞敝敲數斂斃變斛斟斫斷旃旆旁旄旌旒旛旙无旡旱杲昊昃旻杳昵昶昴昜晏晄晉晁晞晝晤晧晨晟晢晰暃暈暎暉暄暘暝曁暹曉暾暼���".split("");for(a=0;a!=t[157].length;++a)if(t[157][a].charCodeAt(0)!==65533){r[t[157][a]]=40192+a;e[40192+a]=t[157][a]}t[158]="����������������������������������������������������������������曄暸曖曚曠昿曦曩曰曵曷朏朖朞朦朧霸朮朿朶杁朸朷杆杞杠杙杣杤枉杰枩杼杪枌枋枦枡枅枷柯枴柬枳柩枸柤柞柝柢柮枹柎柆柧檜栞框栩桀桍栲桎�梳栫桙档桷桿梟梏梭梔條梛梃檮梹桴梵梠梺椏梍桾椁棊椈棘椢椦棡椌棍棔棧棕椶椒椄棗棣椥棹棠棯椨椪椚椣椡棆楹楷楜楸楫楔楾楮椹楴椽楙椰楡楞楝榁楪榲榮槐榿槁槓榾槎寨槊槝榻槃榧樮榑榠榜榕榴槞槨樂樛槿權槹槲槧樅榱樞槭樔槫樊樒櫁樣樓橄樌橲樶橸橇橢橙橦橈樸樢檐檍檠檄檢檣���".split("");for(a=0;a!=t[158].length;++a)if(t[158][a].charCodeAt(0)!==65533){r[t[158][a]]=40448+a;e[40448+a]=t[158][a]}t[159]="����������������������������������������������������������������檗蘗檻櫃櫂檸檳檬櫞櫑櫟檪櫚櫪櫻欅蘖櫺欒欖鬱欟欸欷盜欹飮歇歃歉歐歙歔歛歟歡歸歹歿殀殄殃殍殘殕殞殤殪殫殯殲殱殳殷殼毆毋毓毟毬毫毳毯�麾氈氓气氛氤氣汞汕汢汪沂沍沚沁沛汾汨汳沒沐泄泱泓沽泗泅泝沮沱沾沺泛泯泙泪洟衍洶洫洽洸洙洵洳洒洌浣涓浤浚浹浙涎涕濤涅淹渕渊涵淇淦涸淆淬淞淌淨淒淅淺淙淤淕淪淮渭湮渮渙湲湟渾渣湫渫湶湍渟湃渺湎渤滿渝游溂溪溘滉溷滓溽溯滄溲滔滕溏溥滂溟潁漑灌滬滸滾漿滲漱滯漲滌���".split("");for(a=0;a!=t[159].length;++a)if(t[159][a].charCodeAt(0)!==65533){r[t[159][a]]=40704+a;e[40704+a]=t[159][a]}t[224]="����������������������������������������������������������������漾漓滷澆潺潸澁澀潯潛濳潭澂潼潘澎澑濂潦澳澣澡澤澹濆澪濟濕濬濔濘濱濮濛瀉瀋濺瀑瀁瀏濾瀛瀚潴瀝瀘瀟瀰瀾瀲灑灣炙炒炯烱炬炸炳炮烟烋烝�烙焉烽焜焙煥煕熈煦煢煌煖煬熏燻熄熕熨熬燗熹熾燒燉燔燎燠燬燧燵燼燹燿爍爐爛爨爭爬爰爲爻爼爿牀牆牋牘牴牾犂犁犇犒犖犢犧犹犲狃狆狄狎狒狢狠狡狹狷倏猗猊猜猖猝猴猯猩猥猾獎獏默獗獪獨獰獸獵獻獺珈玳珎玻珀珥珮珞璢琅瑯琥珸琲琺瑕琿瑟瑙瑁瑜瑩瑰瑣瑪瑶瑾璋璞璧瓊瓏瓔珱���".split("");for(a=0;a!=t[224].length;++a)if(t[224][a].charCodeAt(0)!==65533){r[t[224][a]]=57344+a;e[57344+a]=t[224][a]}t[225]="����������������������������������������������������������������瓠瓣瓧瓩瓮瓲瓰瓱瓸瓷甄甃甅甌甎甍甕甓甞甦甬甼畄畍畊畉畛畆畚畩畤畧畫畭畸當疆疇畴疊疉疂疔疚疝疥疣痂疳痃疵疽疸疼疱痍痊痒痙痣痞痾痿�痼瘁痰痺痲痳瘋瘍瘉瘟瘧瘠瘡瘢瘤瘴瘰瘻癇癈癆癜癘癡癢癨癩癪癧癬癰癲癶癸發皀皃皈皋皎皖皓皙皚皰皴皸皹皺盂盍盖盒盞盡盥盧盪蘯盻眈眇眄眩眤眞眥眦眛眷眸睇睚睨睫睛睥睿睾睹瞎瞋瞑瞠瞞瞰瞶瞹瞿瞼瞽瞻矇矍矗矚矜矣矮矼砌砒礦砠礪硅碎硴碆硼碚碌碣碵碪碯磑磆磋磔碾碼磅磊磬���".split("");for(a=0;a!=t[225].length;++a)if(t[225][a].charCodeAt(0)!==65533){r[t[225][a]]=57600+a;e[57600+a]=t[225][a]}t[226]="����������������������������������������������������������������磧磚磽磴礇礒礑礙礬礫祀祠祗祟祚祕祓祺祿禊禝禧齋禪禮禳禹禺秉秕秧秬秡秣稈稍稘稙稠稟禀稱稻稾稷穃穗穉穡穢穩龝穰穹穽窈窗窕窘窖窩竈窰�窶竅竄窿邃竇竊竍竏竕竓站竚竝竡竢竦竭竰笂笏笊笆笳笘笙笞笵笨笶筐筺笄筍笋筌筅筵筥筴筧筰筱筬筮箝箘箟箍箜箚箋箒箏筝箙篋篁篌篏箴篆篝篩簑簔篦篥籠簀簇簓篳篷簗簍篶簣簧簪簟簷簫簽籌籃籔籏籀籐籘籟籤籖籥籬籵粃粐粤粭粢粫粡粨粳粲粱粮粹粽糀糅糂糘糒糜糢鬻糯糲糴糶糺紆���".split("");for(a=0;a!=t[226].length;++a)if(t[226][a].charCodeAt(0)!==65533){r[t[226][a]]=57856+a;e[57856+a]=t[226][a]}t[227]="����������������������������������������������������������������紂紜紕紊絅絋紮紲紿紵絆絳絖絎絲絨絮絏絣經綉絛綏絽綛綺綮綣綵緇綽綫總綢綯緜綸綟綰緘緝緤緞緻緲緡縅縊縣縡縒縱縟縉縋縢繆繦縻縵縹繃縷�縲縺繧繝繖繞繙繚繹繪繩繼繻纃緕繽辮繿纈纉續纒纐纓纔纖纎纛纜缸缺罅罌罍罎罐网罕罔罘罟罠罨罩罧罸羂羆羃羈羇羌羔羞羝羚羣羯羲羹羮羶羸譱翅翆翊翕翔翡翦翩翳翹飜耆耄耋耒耘耙耜耡耨耿耻聊聆聒聘聚聟聢聨聳聲聰聶聹聽聿肄肆肅肛肓肚肭冐肬胛胥胙胝胄胚胖脉胯胱脛脩脣脯腋���".split("");for(a=0;a!=t[227].length;++a)if(t[227][a].charCodeAt(0)!==65533){r[t[227][a]]=58112+a;e[58112+a]=t[227][a]}t[228]="����������������������������������������������������������������隋腆脾腓腑胼腱腮腥腦腴膃膈膊膀膂膠膕膤膣腟膓膩膰膵膾膸膽臀臂膺臉臍臑臙臘臈臚臟臠臧臺臻臾舁舂舅與舊舍舐舖舩舫舸舳艀艙艘艝艚艟艤�艢艨艪艫舮艱艷艸艾芍芒芫芟芻芬苡苣苟苒苴苳苺莓范苻苹苞茆苜茉苙茵茴茖茲茱荀茹荐荅茯茫茗茘莅莚莪莟莢莖茣莎莇莊荼莵荳荵莠莉莨菴萓菫菎菽萃菘萋菁菷萇菠菲萍萢萠莽萸蔆菻葭萪萼蕚蒄葷葫蒭葮蒂葩葆萬葯葹萵蓊葢蒹蒿蒟蓙蓍蒻蓚蓐蓁蓆蓖蒡蔡蓿蓴蔗蔘蔬蔟蔕蔔蓼蕀蕣蕘蕈���".split("");for(a=0;a!=t[228].length;++a)if(t[228][a].charCodeAt(0)!==65533){r[t[228][a]]=58368+a;e[58368+a]=t[228][a]}t[229]="����������������������������������������������������������������蕁蘂蕋蕕薀薤薈薑薊薨蕭薔薛藪薇薜蕷蕾薐藉薺藏薹藐藕藝藥藜藹蘊蘓蘋藾藺蘆蘢蘚蘰蘿虍乕虔號虧虱蚓蚣蚩蚪蚋蚌蚶蚯蛄蛆蚰蛉蠣蚫蛔蛞蛩蛬�蛟蛛蛯蜒蜆蜈蜀蜃蛻蜑蜉蜍蛹蜊蜴蜿蜷蜻蜥蜩蜚蝠蝟蝸蝌蝎蝴蝗蝨蝮蝙蝓蝣蝪蠅螢螟螂螯蟋螽蟀蟐雖螫蟄螳蟇蟆螻蟯蟲蟠蠏蠍蟾蟶蟷蠎蟒蠑蠖蠕蠢蠡蠱蠶蠹蠧蠻衄衂衒衙衞衢衫袁衾袞衵衽袵衲袂袗袒袮袙袢袍袤袰袿袱裃裄裔裘裙裝裹褂裼裴裨裲褄褌褊褓襃褞褥褪褫襁襄褻褶褸襌褝襠襞���".split("");for(a=0;a!=t[229].length;++a)if(t[229][a].charCodeAt(0)!==65533){r[t[229][a]]=58624+a;e[58624+a]=t[229][a]}t[230]="����������������������������������������������������������������襦襤襭襪襯襴襷襾覃覈覊覓覘覡覩覦覬覯覲覺覽覿觀觚觜觝觧觴觸訃訖訐訌訛訝訥訶詁詛詒詆詈詼詭詬詢誅誂誄誨誡誑誥誦誚誣諄諍諂諚諫諳諧�諤諱謔諠諢諷諞諛謌謇謚諡謖謐謗謠謳鞫謦謫謾謨譁譌譏譎證譖譛譚譫譟譬譯譴譽讀讌讎讒讓讖讙讚谺豁谿豈豌豎豐豕豢豬豸豺貂貉貅貊貍貎貔豼貘戝貭貪貽貲貳貮貶賈賁賤賣賚賽賺賻贄贅贊贇贏贍贐齎贓賍贔贖赧赭赱赳趁趙跂趾趺跏跚跖跌跛跋跪跫跟跣跼踈踉跿踝踞踐踟蹂踵踰踴蹊���".split("");for(a=0;a!=t[230].length;++a)if(t[230][a].charCodeAt(0)!==65533){r[t[230][a]]=58880+a;e[58880+a]=t[230][a]}t[231]="����������������������������������������������������������������蹇蹉蹌蹐蹈蹙蹤蹠踪蹣蹕蹶蹲蹼躁躇躅躄躋躊躓躑躔躙躪躡躬躰軆躱躾軅軈軋軛軣軼軻軫軾輊輅輕輒輙輓輜輟輛輌輦輳輻輹轅轂輾轌轉轆轎轗轜�轢轣轤辜辟辣辭辯辷迚迥迢迪迯邇迴逅迹迺逑逕逡逍逞逖逋逧逶逵逹迸遏遐遑遒逎遉逾遖遘遞遨遯遶隨遲邂遽邁邀邊邉邏邨邯邱邵郢郤扈郛鄂鄒鄙鄲鄰酊酖酘酣酥酩酳酲醋醉醂醢醫醯醪醵醴醺釀釁釉釋釐釖釟釡釛釼釵釶鈞釿鈔鈬鈕鈑鉞鉗鉅鉉鉤鉈銕鈿鉋鉐銜銖銓銛鉚鋏銹銷鋩錏鋺鍄錮���".split("");for(a=0;a!=t[231].length;++a)if(t[231][a].charCodeAt(0)!==65533){r[t[231][a]]=59136+a;e[59136+a]=t[231][a]}t[232]="����������������������������������������������������������������錙錢錚錣錺錵錻鍜鍠鍼鍮鍖鎰鎬鎭鎔鎹鏖鏗鏨鏥鏘鏃鏝鏐鏈鏤鐚鐔鐓鐃鐇鐐鐶鐫鐵鐡鐺鑁鑒鑄鑛鑠鑢鑞鑪鈩鑰鑵鑷鑽鑚鑼鑾钁鑿閂閇閊閔閖閘閙�閠閨閧閭閼閻閹閾闊濶闃闍闌闕闔闖關闡闥闢阡阨阮阯陂陌陏陋陷陜陞陝陟陦陲陬隍隘隕隗險隧隱隲隰隴隶隸隹雎雋雉雍襍雜霍雕雹霄霆霈霓霎霑霏霖霙霤霪霰霹霽霾靄靆靈靂靉靜靠靤靦靨勒靫靱靹鞅靼鞁靺鞆鞋鞏鞐鞜鞨鞦鞣鞳鞴韃韆韈韋韜韭齏韲竟韶韵頏頌頸頤頡頷頽顆顏顋顫顯顰���".split("");for(a=0;a!=t[232].length;++a)if(t[232][a].charCodeAt(0)!==65533){r[t[232][a]]=59392+a;e[59392+a]=t[232][a]}t[233]="����������������������������������������������������������������顱顴顳颪颯颱颶飄飃飆飩飫餃餉餒餔餘餡餝餞餤餠餬餮餽餾饂饉饅饐饋饑饒饌饕馗馘馥馭馮馼駟駛駝駘駑駭駮駱駲駻駸騁騏騅駢騙騫騷驅驂驀驃�騾驕驍驛驗驟驢驥驤驩驫驪骭骰骼髀髏髑髓體髞髟髢髣髦髯髫髮髴髱髷髻鬆鬘鬚鬟鬢鬣鬥鬧鬨鬩鬪鬮鬯鬲魄魃魏魍魎魑魘魴鮓鮃鮑鮖鮗鮟鮠鮨鮴鯀鯊鮹鯆鯏鯑鯒鯣鯢鯤鯔鯡鰺鯲鯱鯰鰕鰔鰉鰓鰌鰆鰈鰒鰊鰄鰮鰛鰥鰤鰡鰰鱇鰲鱆鰾鱚鱠鱧鱶鱸鳧鳬鳰鴉鴈鳫鴃鴆鴪鴦鶯鴣鴟鵄鴕鴒鵁鴿鴾鵆鵈���".split("");for(a=0;a!=t[233].length;++a)if(t[233][a].charCodeAt(0)!==65533){r[t[233][a]]=59648+a;e[59648+a]=t[233][a]}t[234]="����������������������������������������������������������������鵝鵞鵤鵑鵐鵙鵲鶉鶇鶫鵯鵺鶚鶤鶩鶲鷄鷁鶻鶸鶺鷆鷏鷂鷙鷓鷸鷦鷭鷯鷽鸚鸛鸞鹵鹹鹽麁麈麋麌麒麕麑麝麥麩麸麪麭靡黌黎黏黐黔黜點黝黠黥黨黯�黴黶黷黹黻黼黽鼇鼈皷鼕鼡鼬鼾齊齒齔齣齟齠齡齦齧齬齪齷齲齶龕龜龠堯槇遙瑤凜熙�������������������������������������������������������������������������������������������".split("");for(a=0;a!=t[234].length;++a)if(t[234][a].charCodeAt(0)!==65533){r[t[234][a]]=59904+a;e[59904+a]=t[234][a]}t[237]="����������������������������������������������������������������纊褜鍈銈蓜俉炻昱棈鋹曻彅丨仡仼伀伃伹佖侒侊侚侔俍偀倢俿倞偆偰偂傔僴僘兊兤冝冾凬刕劜劦勀勛匀匇匤卲厓厲叝﨎咜咊咩哿喆坙坥垬埈埇﨏�塚增墲夋奓奛奝奣妤妺孖寀甯寘寬尞岦岺峵崧嵓﨑嵂嵭嶸嶹巐弡弴彧德忞恝悅悊惞惕愠惲愑愷愰憘戓抦揵摠撝擎敎昀昕昻昉昮昞昤晥晗晙晴晳暙暠暲暿曺朎朗杦枻桒柀栁桄棏﨓楨﨔榘槢樰橫橆橳橾櫢櫤毖氿汜沆汯泚洄涇浯涖涬淏淸淲淼渹湜渧渼溿澈澵濵瀅瀇瀨炅炫焏焄煜煆煇凞燁燾犱���".split("");for(a=0;a!=t[237].length;++a)if(t[237][a].charCodeAt(0)!==65533){r[t[237][a]]=60672+a;e[60672+a]=t[237][a]}t[238]="����������������������������������������������������������������犾猤猪獷玽珉珖珣珒琇珵琦琪琩琮瑢璉璟甁畯皂皜皞皛皦益睆劯砡硎硤硺礰礼神祥禔福禛竑竧靖竫箞精絈絜綷綠緖繒罇羡羽茁荢荿菇菶葈蒴蕓蕙�蕫﨟薰蘒﨡蠇裵訒訷詹誧誾諟諸諶譓譿賰賴贒赶﨣軏﨤逸遧郞都鄕鄧釚釗釞釭釮釤釥鈆鈐鈊鈺鉀鈼鉎鉙鉑鈹鉧銧鉷鉸鋧鋗鋙鋐﨧鋕鋠鋓錥錡鋻﨨錞鋿錝錂鍰鍗鎤鏆鏞鏸鐱鑅鑈閒隆﨩隝隯霳霻靃靍靏靑靕顗顥飯飼餧館馞驎髙髜魵魲鮏鮱鮻鰀鵰鵫鶴鸙黑��ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹ￢￤＇＂���".split("");for(a=0;a!=t[238].length;++a)if(t[238][a].charCodeAt(0)!==65533){r[t[238][a]]=60928+a;e[60928+a]=t[238][a]}t[250]="����������������������������������������������������������������ⅰⅱⅲⅳⅴⅵⅶⅷⅸⅹⅠⅡⅢⅣⅤⅥⅦⅧⅨⅩ￢￤＇＂㈱№℡∵纊褜鍈銈蓜俉炻昱棈鋹曻彅丨仡仼伀伃伹佖侒侊侚侔俍偀倢俿倞偆偰偂傔僴僘兊�兤冝冾凬刕劜劦勀勛匀匇匤卲厓厲叝﨎咜咊咩哿喆坙坥垬埈埇﨏塚增墲夋奓奛奝奣妤妺孖寀甯寘寬尞岦岺峵崧嵓﨑嵂嵭嶸嶹巐弡弴彧德忞恝悅悊惞惕愠惲愑愷愰憘戓抦揵摠撝擎敎昀昕昻昉昮昞昤晥晗晙晴晳暙暠暲暿曺朎朗杦枻桒柀栁桄棏﨓楨﨔榘槢樰橫橆橳橾櫢櫤毖氿汜沆汯泚洄涇浯���".split("");for(a=0;a!=t[250].length;++a)if(t[250][a].charCodeAt(0)!==65533){r[t[250][a]]=64e3+a;e[64e3+a]=t[250][a]}t[251]="����������������������������������������������������������������涖涬淏淸淲淼渹湜渧渼溿澈澵濵瀅瀇瀨炅炫焏焄煜煆煇凞燁燾犱犾猤猪獷玽珉珖珣珒琇珵琦琪琩琮瑢璉璟甁畯皂皜皞皛皦益睆劯砡硎硤硺礰礼神�祥禔福禛竑竧靖竫箞精絈絜綷綠緖繒罇羡羽茁荢荿菇菶葈蒴蕓蕙蕫﨟薰蘒﨡蠇裵訒訷詹誧誾諟諸諶譓譿賰賴贒赶﨣軏﨤逸遧郞都鄕鄧釚釗釞釭釮釤釥鈆鈐鈊鈺鉀鈼鉎鉙鉑鈹鉧銧鉷鉸鋧鋗鋙鋐﨧鋕鋠鋓錥錡鋻﨨錞鋿錝錂鍰鍗鎤鏆鏞鏸鐱鑅鑈閒隆﨩隝隯霳霻靃靍靏靑靕顗顥飯飼餧館馞驎髙���".split("");for(a=0;a!=t[251].length;++a)if(t[251][a].charCodeAt(0)!==65533){r[t[251][a]]=64256+a;e[64256+a]=t[251][a]}t[252]="����������������������������������������������������������������髜魵魲鮏鮱鮻鰀鵰鵫鶴鸙黑������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������".split("");for(a=0;a!=t[252].length;++a)if(t[252][a].charCodeAt(0)!==65533){r[t[252][a]]=64512+a;e[64512+a]=t[252][a]}return{enc:r,dec:e}}();cptable[936]=function(){var e=[],r={},t=[],a;t[0]="\0\b\t\n\x0B\f\r !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~€�������������������������������������������������������������������������������������������������������������������������������".split("");for(a=0;a!=t[0].length;++a)if(t[0][a].charCodeAt(0)!==65533){r[t[0][a]]=0+a;e[0+a]=t[0][a]}t[129]="����������������������������������������������������������������丂丄丅丆丏丒丗丟丠両丣並丩丮丯丱丳丵丷丼乀乁乂乄乆乊乑乕乗乚乛乢乣乤乥乧乨乪乫乬乭乮乯乲乴乵乶乷乸乹乺乻乼乽乿亀亁亂亃亄亅亇亊�亐亖亗亙亜亝亞亣亪亯亰亱亴亶亷亸亹亼亽亾仈仌仏仐仒仚仛仜仠仢仦仧仩仭仮仯仱仴仸仹仺仼仾伀伂伃伄伅伆伇伈伋伌伒伓伔伕伖伜伝伡伣伨伩伬伭伮伱伳伵伷伹伻伾伿佀佁佂佄佅佇佈佉佊佋佌佒佔佖佡佢佦佨佪佫佭佮佱佲併佷佸佹佺佽侀侁侂侅來侇侊侌侎侐侒侓侕侖侘侙侚侜侞侟価侢�".split("");for(a=0;a!=t[129].length;++a)if(t[129][a].charCodeAt(0)!==65533){r[t[129][a]]=33024+a;e[33024+a]=t[129][a]}t[130]="����������������������������������������������������������������侤侫侭侰侱侲侳侴侶侷侸侹侺侻侼侽侾俀俁係俆俇俈俉俋俌俍俒俓俔俕俖俙俛俠俢俤俥俧俫俬俰俲俴俵俶俷俹俻俼俽俿倀倁倂倃倄倅倆倇倈倉倊�個倎倐們倓倕倖倗倛倝倞倠倢倣値倧倫倯倰倱倲倳倴倵倶倷倸倹倻倽倿偀偁偂偄偅偆偉偊偋偍偐偑偒偓偔偖偗偘偙偛偝偞偟偠偡偢偣偤偦偧偨偩偪偫偭偮偯偰偱偲偳側偵偸偹偺偼偽傁傂傃傄傆傇傉傊傋傌傎傏傐傑傒傓傔傕傖傗傘備傚傛傜傝傞傟傠傡傢傤傦傪傫傭傮傯傰傱傳傴債傶傷傸傹傼�".split("");for(a=0;a!=t[130].length;++a)if(t[130][a].charCodeAt(0)!==65533){r[t[130][a]]=33280+a;e[33280+a]=t[130][a]}t[131]="����������������������������������������������������������������傽傾傿僀僁僂僃僄僅僆僇僈僉僊僋僌働僎僐僑僒僓僔僕僗僘僙僛僜僝僞僟僠僡僢僣僤僥僨僩僪僫僯僰僱僲僴僶僷僸價僺僼僽僾僿儀儁儂儃億儅儈�儉儊儌儍儎儏儐儑儓儔儕儖儗儘儙儚儛儜儝儞償儠儢儣儤儥儦儧儨儩優儫儬儭儮儯儰儱儲儳儴儵儶儷儸儹儺儻儼儽儾兂兇兊兌兎兏児兒兓兗兘兙兛兝兞兟兠兡兣兤兦內兩兪兯兲兺兾兿冃冄円冇冊冋冎冏冐冑冓冔冘冚冝冞冟冡冣冦冧冨冩冪冭冮冴冸冹冺冾冿凁凂凃凅凈凊凍凎凐凒凓凔凕凖凗�".split("");for(a=0;a!=t[131].length;++a)if(t[131][a].charCodeAt(0)!==65533){r[t[131][a]]=33536+a;e[33536+a]=t[131][a]}t[132]="����������������������������������������������������������������凘凙凚凜凞凟凢凣凥処凧凨凩凪凬凮凱凲凴凷凾刄刅刉刋刌刏刐刓刔刕刜刞刟刡刢刣別刦刧刪刬刯刱刲刴刵刼刾剄剅剆則剈剉剋剎剏剒剓剕剗剘�剙剚剛剝剟剠剢剣剤剦剨剫剬剭剮剰剱剳剴創剶剷剸剹剺剻剼剾劀劃劄劅劆劇劉劊劋劌劍劎劏劑劒劔劕劖劗劘劙劚劜劤劥劦劧劮劯劰労劵劶劷劸効劺劻劼劽勀勁勂勄勅勆勈勊勌勍勎勏勑勓勔動勗務勚勛勜勝勞勠勡勢勣勥勦勧勨勩勪勫勬勭勮勯勱勲勳勴勵勶勷勸勻勼勽匁匂匃匄匇匉匊匋匌匎�".split("");for(a=0;a!=t[132].length;++a)if(t[132][a].charCodeAt(0)!==65533){r[t[132][a]]=33792+a;e[33792+a]=t[132][a]}t[133]="����������������������������������������������������������������匑匒匓匔匘匛匜匞匟匢匤匥匧匨匩匫匬匭匯匰匱匲匳匴匵匶匷匸匼匽區卂卄卆卋卌卍卐協単卙卛卝卥卨卪卬卭卲卶卹卻卼卽卾厀厁厃厇厈厊厎厏�厐厑厒厓厔厖厗厙厛厜厞厠厡厤厧厪厫厬厭厯厰厱厲厳厴厵厷厸厹厺厼厽厾叀參叄叅叆叇収叏叐叒叓叕叚叜叝叞叡叢叧叴叺叾叿吀吂吅吇吋吔吘吙吚吜吢吤吥吪吰吳吶吷吺吽吿呁呂呄呅呇呉呌呍呎呏呑呚呝呞呟呠呡呣呥呧呩呪呫呬呭呮呯呰呴呹呺呾呿咁咃咅咇咈咉咊咍咑咓咗咘咜咞咟咠咡�".split("");for(a=0;a!=t[133].length;++a)if(t[133][a].charCodeAt(0)!==65533){r[t[133][a]]=34048+a;e[34048+a]=t[133][a]}t[134]="����������������������������������������������������������������咢咥咮咰咲咵咶咷咹咺咼咾哃哅哊哋哖哘哛哠員哢哣哤哫哬哯哰哱哴哵哶哷哸哹哻哾唀唂唃唄唅唈唊唋唌唍唎唒唓唕唖唗唘唙唚唜唝唞唟唡唥唦�唨唩唫唭唲唴唵唶唸唹唺唻唽啀啂啅啇啈啋啌啍啎問啑啒啓啔啗啘啙啚啛啝啞啟啠啢啣啨啩啫啯啰啱啲啳啴啹啺啽啿喅喆喌喍喎喐喒喓喕喖喗喚喛喞喠喡喢喣喤喥喦喨喩喪喫喬喭單喯喰喲喴営喸喺喼喿嗀嗁嗂嗃嗆嗇嗈嗊嗋嗎嗏嗐嗕嗗嗘嗙嗚嗛嗞嗠嗢嗧嗩嗭嗮嗰嗱嗴嗶嗸嗹嗺嗻嗼嗿嘂嘃嘄嘅�".split("");for(a=0;a!=t[134].length;++a)if(t[134][a].charCodeAt(0)!==65533){r[t[134][a]]=34304+a;e[34304+a]=t[134][a]}t[135]="����������������������������������������������������������������嘆嘇嘊嘋嘍嘐嘑嘒嘓嘔嘕嘖嘗嘙嘚嘜嘝嘠嘡嘢嘥嘦嘨嘩嘪嘫嘮嘯嘰嘳嘵嘷嘸嘺嘼嘽嘾噀噁噂噃噄噅噆噇噈噉噊噋噏噐噑噒噓噕噖噚噛噝噞噟噠噡�噣噥噦噧噭噮噯噰噲噳噴噵噷噸噹噺噽噾噿嚀嚁嚂嚃嚄嚇嚈嚉嚊嚋嚌嚍嚐嚑嚒嚔嚕嚖嚗嚘嚙嚚嚛嚜嚝嚞嚟嚠嚡嚢嚤嚥嚦嚧嚨嚩嚪嚫嚬嚭嚮嚰嚱嚲嚳嚴嚵嚶嚸嚹嚺嚻嚽嚾嚿囀囁囂囃囄囅囆囇囈囉囋囌囍囎囏囐囑囒囓囕囖囘囙囜団囥囦囧囨囩囪囬囮囯囲図囶囷囸囻囼圀圁圂圅圇國圌圍圎圏圐圑�".split("");for(a=0;a!=t[135].length;++a)if(t[135][a].charCodeAt(0)!==65533){r[t[135][a]]=34560+a;e[34560+a]=t[135][a]}t[136]="����������������������������������������������������������������園圓圔圕圖圗團圙圚圛圝圞圠圡圢圤圥圦圧圫圱圲圴圵圶圷圸圼圽圿坁坃坄坅坆坈坉坋坒坓坔坕坖坘坙坢坣坥坧坬坮坰坱坲坴坵坸坹坺坽坾坿垀�垁垇垈垉垊垍垎垏垐垑垔垕垖垗垘垙垚垜垝垞垟垥垨垪垬垯垰垱垳垵垶垷垹垺垻垼垽垾垿埀埁埄埅埆埇埈埉埊埌埍埐埑埓埖埗埛埜埞埡埢埣埥埦埧埨埩埪埫埬埮埰埱埲埳埵埶執埻埼埾埿堁堃堄堅堈堉堊堌堎堏堐堒堓堔堖堗堘堚堛堜堝堟堢堣堥堦堧堨堩堫堬堭堮堯報堲堳場堶堷堸堹堺堻堼堽�".split("");for(a=0;a!=t[136].length;++a)if(t[136][a].charCodeAt(0)!==65533){r[t[136][a]]=34816+a;e[34816+a]=t[136][a]}t[137]="����������������������������������������������������������������堾堿塀塁塂塃塅塆塇塈塉塊塋塎塏塐塒塓塕塖塗塙塚塛塜塝塟塠塡塢塣塤塦塧塨塩塪塭塮塯塰塱塲塳塴塵塶塷塸塹塺塻塼塽塿墂墄墆墇墈墊墋墌�墍墎墏墐墑墔墕墖増墘墛墜墝墠墡墢墣墤墥墦墧墪墫墬墭墮墯墰墱墲墳墴墵墶墷墸墹墺墻墽墾墿壀壂壃壄壆壇壈壉壊壋壌壍壎壏壐壒壓壔壖壗壘壙壚壛壜壝壞壟壠壡壢壣壥壦壧壨壩壪壭壯壱売壴壵壷壸壺壻壼壽壾壿夀夁夃夅夆夈変夊夋夌夎夐夑夒夓夗夘夛夝夞夠夡夢夣夦夨夬夰夲夳夵夶夻�".split("");for(a=0;a!=t[137].length;++a)if(t[137][a].charCodeAt(0)!==65533){r[t[137][a]]=35072+a;e[35072+a]=t[137][a]}t[138]="����������������������������������������������������������������夽夾夿奀奃奅奆奊奌奍奐奒奓奙奛奜奝奞奟奡奣奤奦奧奨奩奪奫奬奭奮奯奰奱奲奵奷奺奻奼奾奿妀妅妉妋妌妎妏妐妑妔妕妘妚妛妜妝妟妠妡妢妦�妧妬妭妰妱妳妴妵妶妷妸妺妼妽妿姀姁姂姃姄姅姇姈姉姌姍姎姏姕姖姙姛姞姟姠姡姢姤姦姧姩姪姫姭姮姯姰姱姲姳姴姵姶姷姸姺姼姽姾娀娂娊娋娍娎娏娐娒娔娕娖娗娙娚娛娝娞娡娢娤娦娧娨娪娫娬娭娮娯娰娳娵娷娸娹娺娻娽娾娿婁婂婃婄婅婇婈婋婌婍婎婏婐婑婒婓婔婖婗婘婙婛婜婝婞婟婠�".split("");for(a=0;a!=t[138].length;++a)if(t[138][a].charCodeAt(0)!==65533){r[t[138][a]]=35328+a;e[35328+a]=t[138][a]}t[139]="����������������������������������������������������������������婡婣婤婥婦婨婩婫婬婭婮婯婰婱婲婳婸婹婻婼婽婾媀媁媂媃媄媅媆媇媈媉媊媋媌媍媎媏媐媑媓媔媕媖媗媘媙媜媝媞媟媠媡媢媣媤媥媦媧媨媩媫媬�媭媮媯媰媱媴媶媷媹媺媻媼媽媿嫀嫃嫄嫅嫆嫇嫈嫊嫋嫍嫎嫏嫐嫑嫓嫕嫗嫙嫚嫛嫝嫞嫟嫢嫤嫥嫧嫨嫪嫬嫭嫮嫯嫰嫲嫳嫴嫵嫶嫷嫸嫹嫺嫻嫼嫽嫾嫿嬀嬁嬂嬃嬄嬅嬆嬇嬈嬊嬋嬌嬍嬎嬏嬐嬑嬒嬓嬔嬕嬘嬙嬚嬛嬜嬝嬞嬟嬠嬡嬢嬣嬤嬥嬦嬧嬨嬩嬪嬫嬬嬭嬮嬯嬰嬱嬳嬵嬶嬸嬹嬺嬻嬼嬽嬾嬿孁孂孃孄孅孆孇�".split("");for(a=0;a!=t[139].length;++a)if(t[139][a].charCodeAt(0)!==65533){r[t[139][a]]=35584+a;e[35584+a]=t[139][a]}t[140]="����������������������������������������������������������������孈孉孊孋孌孍孎孏孒孖孞孠孡孧孨孫孭孮孯孲孴孶孷學孹孻孼孾孿宂宆宊宍宎宐宑宒宔宖実宧宨宩宬宭宮宯宱宲宷宺宻宼寀寁寃寈寉寊寋寍寎寏�寑寔寕寖寗寘寙寚寛寜寠寢寣實寧審寪寫寬寭寯寱寲寳寴寵寶寷寽対尀専尃尅將專尋尌對導尐尒尓尗尙尛尞尟尠尡尣尦尨尩尪尫尭尮尯尰尲尳尵尶尷屃屄屆屇屌屍屒屓屔屖屗屘屚屛屜屝屟屢層屧屨屩屪屫屬屭屰屲屳屴屵屶屷屸屻屼屽屾岀岃岄岅岆岇岉岊岋岎岏岒岓岕岝岞岟岠岡岤岥岦岧岨�".split("");for(a=0;a!=t[140].length;++a)if(t[140][a].charCodeAt(0)!==65533){r[t[140][a]]=35840+a;e[35840+a]=t[140][a]}t[141]="����������������������������������������������������������������岪岮岯岰岲岴岶岹岺岻岼岾峀峂峃峅峆峇峈峉峊峌峍峎峏峐峑峓峔峕峖峗峘峚峛峜峝峞峟峠峢峣峧峩峫峬峮峯峱峲峳峴峵島峷峸峹峺峼峽峾峿崀�崁崄崅崈崉崊崋崌崍崏崐崑崒崓崕崗崘崙崚崜崝崟崠崡崢崣崥崨崪崫崬崯崰崱崲崳崵崶崷崸崹崺崻崼崿嵀嵁嵂嵃嵄嵅嵆嵈嵉嵍嵎嵏嵐嵑嵒嵓嵔嵕嵖嵗嵙嵚嵜嵞嵟嵠嵡嵢嵣嵤嵥嵦嵧嵨嵪嵭嵮嵰嵱嵲嵳嵵嵶嵷嵸嵹嵺嵻嵼嵽嵾嵿嶀嶁嶃嶄嶅嶆嶇嶈嶉嶊嶋嶌嶍嶎嶏嶐嶑嶒嶓嶔嶕嶖嶗嶘嶚嶛嶜嶞嶟嶠�".split("");for(a=0;a!=t[141].length;++a)if(t[141][a].charCodeAt(0)!==65533){r[t[141][a]]=36096+a;e[36096+a]=t[141][a]}t[142]="����������������������������������������������������������������嶡嶢嶣嶤嶥嶦嶧嶨嶩嶪嶫嶬嶭嶮嶯嶰嶱嶲嶳嶴嶵嶶嶸嶹嶺嶻嶼嶽嶾嶿巀巁巂巃巄巆巇巈巉巊巋巌巎巏巐巑巒巓巔巕巖巗巘巙巚巜巟巠巣巤巪巬巭�巰巵巶巸巹巺巻巼巿帀帄帇帉帊帋帍帎帒帓帗帞帟帠帡帢帣帤帥帨帩帪師帬帯帰帲帳帴帵帶帹帺帾帿幀幁幃幆幇幈幉幊幋幍幎幏幐幑幒幓幖幗幘幙幚幜幝幟幠幣幤幥幦幧幨幩幪幫幬幭幮幯幰幱幵幷幹幾庁庂広庅庈庉庌庍庎庒庘庛庝庡庢庣庤庨庩庪庫庬庮庯庰庱庲庴庺庻庼庽庿廀廁廂廃廄廅�".split("");for(a=0;a!=t[142].length;++a)if(t[142][a].charCodeAt(0)!==65533){r[t[142][a]]=36352+a;e[36352+a]=t[142][a]}t[143]="����������������������������������������������������������������廆廇廈廋廌廍廎廏廐廔廕廗廘廙廚廜廝廞廟廠廡廢廣廤廥廦廧廩廫廬廭廮廯廰廱廲廳廵廸廹廻廼廽弅弆弇弉弌弍弎弐弒弔弖弙弚弜弝弞弡弢弣弤�弨弫弬弮弰弲弳弴張弶強弸弻弽弾弿彁彂彃彄彅彆彇彈彉彊彋彌彍彎彏彑彔彙彚彛彜彞彟彠彣彥彧彨彫彮彯彲彴彵彶彸彺彽彾彿徃徆徍徎徏徑従徔徖徚徛徝從徟徠徢徣徤徥徦徧復徫徬徯徰徱徲徳徴徶徸徹徺徻徾徿忀忁忂忇忈忊忋忎忓忔忕忚忛応忞忟忢忣忥忦忨忩忬忯忰忲忳忴忶忷忹忺忼怇�".split("");for(a=0;a!=t[143].length;++a)if(t[143][a].charCodeAt(0)!==65533){r[t[143][a]]=36608+a;e[36608+a]=t[143][a]}t[144]="����������������������������������������������������������������怈怉怋怌怐怑怓怗怘怚怞怟怢怣怤怬怭怮怰怱怲怳怴怶怷怸怹怺怽怾恀恄恅恆恇恈恉恊恌恎恏恑恓恔恖恗恘恛恜恞恟恠恡恥恦恮恱恲恴恵恷恾悀�悁悂悅悆悇悈悊悋悎悏悐悑悓悕悗悘悙悜悞悡悢悤悥悧悩悪悮悰悳悵悶悷悹悺悽悾悿惀惁惂惃惄惇惈惉惌惍惎惏惐惒惓惔惖惗惙惛惞惡惢惣惤惥惪惱惲惵惷惸惻惼惽惾惿愂愃愄愅愇愊愋愌愐愑愒愓愔愖愗愘愙愛愜愝愞愡愢愥愨愩愪愬愭愮愯愰愱愲愳愴愵愶愷愸愹愺愻愼愽愾慀慁慂慃慄慅慆�".split("");for(a=0;a!=t[144].length;++a)if(t[144][a].charCodeAt(0)!==65533){r[t[144][a]]=36864+a;e[36864+a]=t[144][a]}t[145]="����������������������������������������������������������������慇慉態慍慏慐慒慓慔慖慗慘慙慚慛慜慞慟慠慡慣慤慥慦慩慪慫慬慭慮慯慱慲慳慴慶慸慹慺慻慼慽慾慿憀憁憂憃憄憅憆憇憈憉憊憌憍憏憐憑憒憓憕�憖憗憘憙憚憛憜憞憟憠憡憢憣憤憥憦憪憫憭憮憯憰憱憲憳憴憵憶憸憹憺憻憼憽憿懀懁懃懄懅懆懇應懌懍懎懏懐懓懕懖懗懘懙懚懛懜懝懞懟懠懡懢懣懤懥懧懨懩懪懫懬懭懮懯懰懱懲懳懴懶懷懸懹懺懻懼懽懾戀戁戂戃戄戅戇戉戓戔戙戜戝戞戠戣戦戧戨戩戫戭戯戰戱戲戵戶戸戹戺戻戼扂扄扅扆扊�".split("");for(a=0;a!=t[145].length;++a)if(t[145][a].charCodeAt(0)!==65533){r[t[145][a]]=37120+a;e[37120+a]=t[145][a]}t[146]="����������������������������������������������������������������扏扐払扖扗扙扚扜扝扞扟扠扡扢扤扥扨扱扲扴扵扷扸扺扻扽抁抂抃抅抆抇抈抋抌抍抎抏抐抔抙抜抝択抣抦抧抩抪抭抮抯抰抲抳抴抶抷抸抺抾拀拁�拃拋拏拑拕拝拞拠拡拤拪拫拰拲拵拸拹拺拻挀挃挄挅挆挊挋挌挍挏挐挒挓挔挕挗挘挙挜挦挧挩挬挭挮挰挱挳挴挵挶挷挸挻挼挾挿捀捁捄捇捈捊捑捒捓捔捖捗捘捙捚捛捜捝捠捤捥捦捨捪捫捬捯捰捲捳捴捵捸捹捼捽捾捿掁掃掄掅掆掋掍掑掓掔掕掗掙掚掛掜掝掞掟採掤掦掫掯掱掲掵掶掹掻掽掿揀�".split("");for(a=0;a!=t[146].length;++a)if(t[146][a].charCodeAt(0)!==65533){r[t[146][a]]=37376+a;e[37376+a]=t[146][a]}t[147]="����������������������������������������������������������������揁揂揃揅揇揈揊揋揌揑揓揔揕揗揘揙揚換揜揝揟揢揤揥揦揧揨揫揬揮揯揰揱揳揵揷揹揺揻揼揾搃搄搆搇搈搉搊損搎搑搒搕搖搗搘搙搚搝搟搢搣搤�搥搧搨搩搫搮搯搰搱搲搳搵搶搷搸搹搻搼搾摀摂摃摉摋摌摍摎摏摐摑摓摕摖摗摙摚摛摜摝摟摠摡摢摣摤摥摦摨摪摫摬摮摯摰摱摲摳摴摵摶摷摻摼摽摾摿撀撁撃撆撈撉撊撋撌撍撎撏撐撓撔撗撘撚撛撜撝撟撠撡撢撣撥撦撧撨撪撫撯撱撲撳撴撶撹撻撽撾撿擁擃擄擆擇擈擉擊擋擌擏擑擓擔擕擖擙據�".split("");for(a=0;a!=t[147].length;++a)if(t[147][a].charCodeAt(0)!==65533){r[t[147][a]]=37632+a;e[37632+a]=t[147][a]}t[148]="����������������������������������������������������������������擛擜擝擟擠擡擣擥擧擨擩擪擫擬擭擮擯擰擱擲擳擴擵擶擷擸擹擺擻擼擽擾擿攁攂攃攄攅攆攇攈攊攋攌攍攎攏攐攑攓攔攕攖攗攙攚攛攜攝攞攟攠攡�攢攣攤攦攧攨攩攪攬攭攰攱攲攳攷攺攼攽敀敁敂敃敄敆敇敊敋敍敎敐敒敓敔敗敘敚敜敟敠敡敤敥敧敨敩敪敭敮敯敱敳敵敶數敹敺敻敼敽敾敿斀斁斂斃斄斅斆斈斉斊斍斎斏斒斔斕斖斘斚斝斞斠斢斣斦斨斪斬斮斱斲斳斴斵斶斷斸斺斻斾斿旀旂旇旈旉旊旍旐旑旓旔旕旘旙旚旛旜旝旞旟旡旣旤旪旫�".split("");for(a=0;a!=t[148].length;++a)if(t[148][a].charCodeAt(0)!==65533){r[t[148][a]]=37888+a;e[37888+a]=t[148][a]}t[149]="����������������������������������������������������������������旲旳旴旵旸旹旻旼旽旾旿昁昄昅昇昈昉昋昍昐昑昒昖昗昘昚昛昜昞昡昢昣昤昦昩昪昫昬昮昰昲昳昷昸昹昺昻昽昿晀時晄晅晆晇晈晉晊晍晎晐晑晘�晙晛晜晝晞晠晢晣晥晧晩晪晫晬晭晱晲晳晵晸晹晻晼晽晿暀暁暃暅暆暈暉暊暋暍暎暏暐暒暓暔暕暘暙暚暛暜暞暟暠暡暢暣暤暥暦暩暪暫暬暭暯暰暱暲暳暵暶暷暸暺暻暼暽暿曀曁曂曃曄曅曆曇曈曉曊曋曌曍曎曏曐曑曒曓曔曕曖曗曘曚曞曟曠曡曢曣曤曥曧曨曪曫曬曭曮曯曱曵曶書曺曻曽朁朂會�".split("");for(a=0;a!=t[149].length;++a)if(t[149][a].charCodeAt(0)!==65533){r[t[149][a]]=38144+a;e[38144+a]=t[149][a]}t[150]="����������������������������������������������������������������朄朅朆朇朌朎朏朑朒朓朖朘朙朚朜朞朠朡朢朣朤朥朧朩朮朰朲朳朶朷朸朹朻朼朾朿杁杄杅杇杊杋杍杒杔杕杗杘杙杚杛杝杢杣杤杦杧杫杬杮東杴杶�杸杹杺杻杽枀枂枃枅枆枈枊枌枍枎枏枑枒枓枔枖枙枛枟枠枡枤枦枩枬枮枱枲枴枹枺枻枼枽枾枿柀柂柅柆柇柈柉柊柋柌柍柎柕柖柗柛柟柡柣柤柦柧柨柪柫柭柮柲柵柶柷柸柹柺査柼柾栁栂栃栄栆栍栐栒栔栕栘栙栚栛栜栞栟栠栢栣栤栥栦栧栨栫栬栭栮栯栰栱栴栵栶栺栻栿桇桋桍桏桒桖桗桘桙桚桛�".split("");for(a=0;a!=t[150].length;++a)if(t[150][a].charCodeAt(0)!==65533){r[t[150][a]]=38400+a;e[38400+a]=t[150][a]}t[151]="����������������������������������������������������������������桜桝桞桟桪桬桭桮桯桰桱桲桳桵桸桹桺桻桼桽桾桿梀梂梄梇梈梉梊梋梌梍梎梐梑梒梔梕梖梘梙梚梛梜條梞梟梠梡梣梤梥梩梪梫梬梮梱梲梴梶梷梸�梹梺梻梼梽梾梿棁棃棄棅棆棇棈棊棌棎棏棐棑棓棔棖棗棙棛棜棝棞棟棡棢棤棥棦棧棨棩棪棫棬棭棯棲棳棴棶棷棸棻棽棾棿椀椂椃椄椆椇椈椉椊椌椏椑椓椔椕椖椗椘椙椚椛検椝椞椡椢椣椥椦椧椨椩椪椫椬椮椯椱椲椳椵椶椷椸椺椻椼椾楀楁楃楄楅楆楇楈楉楊楋楌楍楎楏楐楑楒楓楕楖楘楙楛楜楟�".split("");for(a=0;a!=t[151].length;++a)if(t[151][a].charCodeAt(0)!==65533){r[t[151][a]]=38656+a;e[38656+a]=t[151][a]}t[152]="����������������������������������������������������������������楡楢楤楥楧楨楩楪楬業楯楰楲楳楴極楶楺楻楽楾楿榁榃榅榊榋榌榎榏榐榑榒榓榖榗榙榚榝榞榟榠榡榢榣榤榥榦榩榪榬榮榯榰榲榳榵榶榸榹榺榼榽�榾榿槀槂槃槄槅槆槇槈槉構槍槏槑槒槓槕槖槗様槙槚槜槝槞槡槢槣槤槥槦槧槨槩槪槫槬槮槯槰槱槳槴槵槶槷槸槹槺槻槼槾樀樁樂樃樄樅樆樇樈樉樋樌樍樎樏樐樑樒樓樔樕樖標樚樛樜樝樞樠樢樣樤樥樦樧権樫樬樭樮樰樲樳樴樶樷樸樹樺樻樼樿橀橁橂橃橅橆橈橉橊橋橌橍橎橏橑橒橓橔橕橖橗橚�".split("");for(a=0;a!=t[152].length;++a)if(t[152][a].charCodeAt(0)!==65533){r[t[152][a]]=38912+a;e[38912+a]=t[152][a];
@@ -251,7 +454,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <img class="login-logo-img" src="data:image/png;base64,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" alt="ILS Tours" />
     <div class="login-title-row">
       <div class="login-title">Control de Equipaje</div>
-      <span class="login-version-badge">v26</span>
+      <span class="login-version-badge">v35</span>
     </div>
     <div class="login-sub">Pull Out – Embarque</div>
     <div class="login-info-box">Para usar esta planilla debes subir la planilla Master de Hospitality.</div>
@@ -265,7 +468,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <div id="app">
   <div class="app-header">
     <div class="header-left">
-      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v26</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
+      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v35</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
       <p id="hdr-sub">Sin viaje cargado</p>
     </div>
     <div class="header-right">
@@ -468,6 +671,21 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   </div>
 </div>
 
+<div id="report-modal"><div id="report-box">
+  <h3 id="rep-title">Report</h3>
+  <label>Tipo de problema</label>
+  <select id="rep-type"><option value="">— Seleccionar —</option><option>Maleta rota</option><option>Maleta dañada / mojada</option><option>Maleta perdida / no encontrada</option><option>Falta contenido</option><option>Otro</option></select>
+  <label>Detalle</label>
+  <textarea id="rep-text" placeholder="Describe lo que pasó (ej. rueda rota, asa cortada, recibida así del hotel)…"></textarea>
+  <label>Fotos (máx. 3)</label>
+  <div id="rep-photos"></div>
+  <button class="extra-btn sec" id="rep-addphoto" onclick="document.getElementById('rep-file').click()">📷 Sacar / agregar foto</button>
+  <input type="file" id="rep-file" accept="image/*" capture="environment" style="display:none" onchange="repAddPhoto(this)">
+  <button class="extra-btn" style="background:#e47c5d" onclick="saveReport()">Guardar report</button>
+  <button class="extra-btn sec" id="rep-del" onclick="deleteReport()" style="display:none">Eliminar report</button>
+  <button class="extra-btn sec" onclick="closeReport()">Cerrar</button>
+</div></div>
+<div id="extra-modal"><div id="extra-box"><h3 id="extra-title"></h3><p id="extra-text"></p><div id="extra-btns"></div></div></div>
 <div id="companion-toast">
   <div class="ct-title" id="ct-title">Compañeros de booking</div>
   <div id="ct-rows"></div>
@@ -504,6 +722,8 @@ let staffName = '';
 let paxState = {}; // id → { status, bags, hotel, notes }
 let actionLog = [];
 let trucks = { 1: 0, 2: 0 };
+let paxReports = {}; // clave pasajero → {type,text,photos[],by,time}
+let bookingExtras = {}; // clave de booking → maletas extra autorizadas
 let currentTab = 'pax';
 
 // Init paxState from PAX_DATA
@@ -728,6 +948,8 @@ function xlApplyMap() {
       db.ref(VOYAGE_REF + '/embarqueInfo').set(window._embarqueInfo);
     }
     db.ref(VOYAGE_REF + '/paxState').remove();
+    db.ref(VOYAGE_REF + '/extras').remove();
+    bookingExtras = {};
   } else {
     console.warn('Firebase no disponible o VOYAGE_REF no definido:', VOYAGE_REF);
   }
@@ -753,16 +975,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Detectar móvil y mostrar vista correcta
 function isMobile() { return window.innerWidth <= 700; }
 function applyMobileView() {
-  const tableView = document.querySelector('.pax-view');
   const cardsView = document.getElementById('pax-cards-container');
-  if (!tableView || !cardsView) return;
-  if (isMobile()) {
-    tableView.style.display = 'none';
-    cardsView.style.display = 'block';
-  } else {
-    tableView.style.display = 'block';
-    cardsView.style.display = 'none';
-  }
+  if (cardsView) cardsView.style.display = 'grid';
 }
 window.addEventListener('resize', applyMobileView);
 
@@ -825,6 +1039,16 @@ function login() {
       renderTable();
       if (currentTab === 'summary') renderSummary();
     }
+  });
+
+  db.ref(VOYAGE_REF + '/reports').on('value', snap => {
+    paxReports = snap.val() || {};
+    renderTable();
+  });
+
+  db.ref(VOYAGE_REF + '/extras').on('value', snap => {
+    bookingExtras = snap.val() || {};
+    renderTable();
   });
 
   db.ref(VOYAGE_REF + '/actionLog').limitToLast(100).on('value', snap => {
@@ -916,18 +1140,59 @@ function getBookingBags(booking) {
   return { total, entries };
 }
 
+// Regla: 1 maleta por pasajero (no cancelado) del booking + extras autorizados.
+function bkKey(p) { return p.booking ? String(p.booking).replace(/[.#$\[\]\/]/g,'_') : 'pax_' + p.n; }
+function bookingInfo(p) {
+  const group = p.booking ? getBookingGroup(p.booking) : [p];
+  const base = group.filter(x => paxState[x.n]?.status !== 'cancelado').length || 1;
+  const extra = parseInt(bookingExtras[bkKey(p)]) || 0;
+  const total = group.reduce((s, x) => s + (parseInt(paxState[x.n]?.bags) || 0), 0);
+  return { group, base, extra, max: base + extra, total };
+}
+
 function checkBookingAlert(booking) {
-  const group = getBookingGroup(booking);
-  const paxCount = group.filter(p => {
-    const s = paxState[p.n]?.status;
-    return !s || s === 'ok';
-  }).length;
-  const { total } = getBookingBags(booking);
-  if (total === 0) return null;
-  if (total === 1 && paxCount > 1) {
-    return `⚠️ Booking de ${paxCount} pax con solo 1 maleta registrada`;
-  }
-  return null;
+  if (!booking) return null;
+  const p = getBookingGroup(booking)[0];
+  if (!p) return null;
+  const i = bookingInfo(p);
+  return i.total > i.max ? `Excede el máximo: ${i.total}/${i.max} maletas` : null;
+}
+
+function closeExtraModal() { document.getElementById('extra-modal').classList.remove('show'); }
+
+function setExtra(p, e) {
+  const k = bkKey(p);
+  if (e > 0) { bookingExtras[k] = e; db.ref(VOYAGE_REF + '/extras/' + k).set(e); }
+  else { delete bookingExtras[k]; db.ref(VOYAGE_REF + '/extras/' + k).remove(); }
+  addLog(`Booking ${p.booking || p.lastName}: ${e > 0 ? '+' + e + ' maleta(s) extra autorizada(s)' : 'sin extra autorizado'}`);
+}
+
+// Pregunta por extra equipaje. onOk(e) se ejecuta al autorizar; onCancel al rechazar.
+function askExtra(p, i, needed, onOk, onCancel) {
+  const opts = [1, 2];
+  if (needed > 2) opts.push(needed);
+  document.getElementById('extra-title').textContent = needed > 0 ? '⚠️ Excede el máximo de maletas' : 'Extra equipaje autorizado';
+  document.getElementById('extra-text').innerHTML =
+    `Booking <strong>${p.booking || (p.lastName + ', ' + p.firstName)}</strong>: ${i.base} pasajero${i.base > 1 ? 's' : ''} = máximo <strong>${i.base}</strong> maleta${i.base > 1 ? 's' : ''} (1 por pasajero).` +
+    (needed > 0 ? `<br>Estás registrando <strong>${i.total}</strong>. ¿Está autorizado a llevar extra?` : `<br>Actualmente: ${i.extra ? '+' + i.extra + ' extra' : 'sin extra'}.`);
+  const btns = opts.map(e => `<button class="extra-btn" data-e="${e}">Autorizado: +${e} maleta${e > 1 ? 's' : ''} extra</button>`).join('') +
+    (needed > 0 ? '' : '<button class="extra-btn sec" data-e="0">Sin extra</button>') +
+    `<button class="extra-btn sec" data-e="x">${needed > 0 ? 'No autorizado — dejar como estaba' : 'Cerrar'}</button>`;
+  const box = document.getElementById('extra-btns');
+  box.innerHTML = btns;
+  box.querySelectorAll('button').forEach(b => b.onclick = () => {
+    closeExtraModal();
+    const v = b.dataset.e;
+    if (v === 'x') { if (onCancel) onCancel(); return; }
+    setExtra(p, parseInt(v));
+    if (onOk) onOk(parseInt(v));
+  });
+  document.getElementById('extra-modal').classList.add('show');
+}
+
+function editExtra(n) {
+  const p = PAX_DATA.find(x => x.n === n);
+  askExtra(p, bookingInfo(p), 0, () => renderTable(), null);
 }
 
 // ── TABLE RENDER ─────────────────────────────────────────
@@ -963,6 +1228,8 @@ function renderTable() {
       bookingNote = `<div class="booking-note">🧳 Maletas registradas por ${entries.map(e=>e.name.split(' ')[0]).join(', ')} (${bTotal} total)</div>`;
     }
     let alertNote = alert ? `<div class="alert-note">${alert}</div>` : '';
+    const bi = bookingInfo(p);
+    if (bi.extra > 0) alertNote += `<div class="extra-note" onclick="editExtra(${p.n})">🧳 Máx. ${bi.max} · +${bi.extra} extra autorizado ✎</div>`;
     let logNote = s.logEntry ? `<div class="log-note">↳ ${s.logEntry}</div>` : '';
 
     const statusClass = s.status ? s.status : '';
@@ -979,7 +1246,7 @@ function renderTable() {
       <td>${p.firstName}</td>
       <td class="hide-mobile" style="font-size:11px;color:var(--txt2)">${p.booking}</td>
       <td style="font-size:12px">${p.flight}</td>
-      <td class="hide-mobile"><span class="tag-pill tag-${p.tag}">${p.tag}</span></td>
+      <td class="hide-mobile"><span class="tag-pill ${tagCls(p.tag)}">${p.tag}</span></td>
       <td class="hide-mobile" style="font-size:12px">${p.cabin}</td>
       <td>
         <select class="status-sel ${statusClass}" onchange="updateStatus(${p.n}, this.value)">
@@ -1005,37 +1272,119 @@ function renderTable() {
     </tr>`;
   }).join('');
 
-  // ── VISTA TARJETAS PARA MÓVIL ──
+  // ── TARJETAS (todas las pantallas) ──
   const cardsContainer = document.getElementById('pax-cards-container');
   if (cardsContainer) {
+    let lastPl = null;
     cardsContainer.innerHTML = filtered.map(p => {
       const s = paxState[p.n] || {};
       const alert = checkBookingAlert(p.booking);
-      const statusLabels = { ok:'✓ Equipaje OK', 'no-maleta':'Sin maleta', cancelado:'Canceló', personal:'Lleva personalmente', directo:'Directo aeropuerto', '':'— Pendiente —' };
-      const cardClass = alert ? 'has-alert' : (s.status === 'ok' ? 'ok' : '');
-      return `<div class="pax-card ${cardClass}">
+      const bi = bookingInfo(p);
+      const rep = paxReports[repKey(p)];
+      const sel = v => s.status === v ? 'selected' : '';
+      let hdr = '';
+      if (p.plane !== lastPl) { hdr = `<div class="plane-hdr">✈ ${p.plane || 'Vuelo ' + p.flight}</div>`; lastPl = p.plane; }
+      const cls = rep ? 'has-report' : (alert ? 'has-alert' : (s.status === 'ok' ? 'ok' : ''));
+      const { total: bTotal, entries } = getBookingBags(p.booking);
+      const note = (entries.length > 0 && !entries.find(e => e.name.includes(p.firstName)))
+        ? `<div class="booking-note">🧳 Maletas registradas por ${entries.map(e=>e.name.split(' ')[0]).join(', ')} (${bTotal} total)</div>` : '';
+      return hdr + `<div class="pax-card ${cls}">
         <div class="pax-card-name">${p.lastName}, ${p.firstName}</div>
         <div class="pax-card-meta">
-          <span>✈ DAP ${p.flight}</span>
+          <span>✈ Vuelo ${p.flight}</span>
           <span>🛏 ${p.cabin||'—'}</span>
-          <span>${p.booking||'—'}</span>
-          ${p.tag ? `<span class="tag-pill tag-${p.tag}">${p.tag}</span>` : ''}
+          <span>📘 ${p.booking||'—'}</span>
+          ${p.tag ? `<span class="tag-pill ${tagCls(p.tag)}">${p.tag}</span>` : ''}
         </div>
         <div class="pax-card-row">
-          <select class="status-sel ${s.status||''}" onchange="updateStatus(${p.n}, this.value)">
-            <option value="" ${!s.status?'selected':''}>— Pendiente —</option>
-            <option value="ok" ${s.status==='ok'?'selected':''}>✓ Equipaje OK</option>
-            <option value="no-maleta" ${s.status==='no-maleta'?'selected':''}>Sin maleta</option>
-            <option value="cancelado" ${s.status==='cancelado'?'selected':''}>Canceló viaje</option>
-            <option value="personal" ${s.status==='personal'?'selected':''}>Lleva personalmente</option>
-            <option value="directo" ${s.status==='directo'?'selected':''}>Directo aeropuerto</option>
-          </select>
-          <input class="pax-card-bags" type="number" min="0" max="20" value="${s.bags||''}" placeholder="🧳" onchange="updateBags(${p.n}, this.value)">
+          <div class="pc-col"><div class="pc-lbl">Estado</div>
+            <select class="status-sel ${s.status||''}" onchange="updateStatus(${p.n}, this.value)">
+              <option value="" ${sel('')}>— Pendiente —</option>
+              <option value="ok" ${sel('ok')}>✓ Equipaje OK</option>
+              <option value="no-maleta" ${sel('no-maleta')}>Sin maleta</option>
+              <option value="cancelado" ${sel('cancelado')}>Canceló viaje</option>
+              <option value="personal" ${sel('personal')}>Lleva personalmente</option>
+              <option value="directo" ${sel('directo')}>Directo aeropuerto</option>
+            </select></div>
+          <div class="pc-col bags"><div class="pc-lbl">Maletas</div>
+            <input class="pax-card-bags" type="number" min="0" max="20" value="${s.bags||''}" placeholder="0" onchange="updateBags(${p.n}, this.value)"></div>
         </div>
-        ${alert ? `<div style="font-size:11px;color:var(--amber-txt);margin-top:4px">⚠️ ${alert}</div>` : ''}
+        <input class="pc-notes" type="text" value="${(s.notes||'').replace(/"/g,'&quot;')}" placeholder="Notas…" onchange="updateNotes(${p.n}, this.value)">
+        ${note}
+        ${alert ? `<div class="alert-note">⚠️ ${alert}</div>` : ''}
+        ${bi.extra > 0 ? `<div class="extra-note" onclick="editExtra(${p.n})">🧳 Máx. ${bi.max} · +${bi.extra} extra autorizado ✎</div>` : ''}
+        ${s.logEntry ? `<div class="log-note">↳ ${s.logEntry}</div>` : ''}
+        <button class="rep-btn ${rep ? 'has' : ''}" onclick="openReport(${p.n})">${rep ? '⚠ Ver / editar REPORT' : '📝 Agregar report'}</button>
+        ${rep ? `<div class="rep-sum"><strong>${rep.type || 'Report'}</strong>${rep.photos && rep.photos.length ? ' · 📷 ' + rep.photos.length : ''}${rep.text ? ' — ' + rep.text.slice(0, 70) + (rep.text.length > 70 ? '…' : '') : ''}</div>` : ''}
       </div>`;
     }).join('');
   }
+}
+
+// ── REPORTS POR PASAJERO ─────────────────────────────────
+let repEditing = null;
+function tagCls(t) { return 'tag-' + String(t || '').trim().toUpperCase(); }
+function repKey(p) { return (p.lastName + '_' + p.firstName + '_' + (p.booking || p.n)).replace(/[.#$\[\]\/\s]+/g, '_'); }
+
+function openReport(n) {
+  const p = PAX_DATA.find(x => x.n === n);
+  const ex = paxReports[repKey(p)] || {};
+  repEditing = { n, type: ex.type || '', text: ex.text || '', photos: (ex.photos || []).filter(Boolean).slice() };
+  document.getElementById('rep-title').textContent = '⚠ Report — ' + p.lastName + ', ' + p.firstName;
+  document.getElementById('rep-type').value = repEditing.type;
+  document.getElementById('rep-text').value = repEditing.text;
+  document.getElementById('rep-del').style.display = ex.type || ex.text || (ex.photos && ex.photos.length) ? 'block' : 'none';
+  renderRepPhotos();
+  document.getElementById('report-modal').classList.add('show');
+}
+function closeReport() { document.getElementById('report-modal').classList.remove('show'); repEditing = null; }
+function renderRepPhotos() {
+  document.getElementById('rep-photos').innerHTML = repEditing.photos.map((ph, i) =>
+    `<div class="rep-ph"><img src="${ph}"><span onclick="repRemovePhoto(${i})">✕</span></div>`).join('');
+  document.getElementById('rep-addphoto').style.display = repEditing.photos.length >= 3 ? 'none' : 'block';
+}
+function repRemovePhoto(i) { repEditing.photos.splice(i, 1); renderRepPhotos(); }
+function compressImage(file, cb) {
+  const r = new FileReader();
+  r.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, 900 / Math.max(img.width, img.height));
+      const w = Math.round(img.width * k), h = Math.round(img.height * k);
+      const cv = document.createElement('canvas'); cv.width = w; cv.height = h;
+      cv.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(cv.toDataURL('image/jpeg', 0.65));
+    };
+    img.src = e.target.result;
+  };
+  r.readAsDataURL(file);
+}
+function repAddPhoto(input) {
+  const f = input.files[0]; input.value = '';
+  if (!f || !repEditing || repEditing.photos.length >= 3) return;
+  compressImage(f, d => { if (!repEditing) return; repEditing.photos.push(d); renderRepPhotos(); });
+}
+function saveReport() {
+  if (!repEditing) return;
+  const type = document.getElementById('rep-type').value;
+  const text = document.getElementById('rep-text').value.trim();
+  if (!type) { alert('Selecciona el tipo de problema.'); return; }
+  if (!text && !repEditing.photos.length) { alert('Agrega un detalle o al menos una foto.'); return; }
+  const p = PAX_DATA.find(x => x.n === repEditing.n);
+  const obj = { type, text, photos: repEditing.photos, by: staffName, time: nowStr(), pax: p.lastName + ', ' + p.firstName, booking: p.booking || '' };
+  paxReports[repKey(p)] = obj;
+  db.ref(VOYAGE_REF + '/reports/' + repKey(p)).set(obj);
+  addLog(`Report: ${p.lastName}, ${p.firstName} → ${type}`);
+  closeReport(); renderTable();
+}
+function deleteReport() {
+  if (!repEditing) return;
+  if (!confirm('¿Eliminar este report y sus fotos?')) return;
+  const p = PAX_DATA.find(x => x.n === repEditing.n);
+  delete paxReports[repKey(p)];
+  db.ref(VOYAGE_REF + '/reports/' + repKey(p)).remove();
+  addLog(`Report eliminado: ${p.lastName}, ${p.firstName}`);
+  closeReport(); renderTable();
 }
 
 // ── UPDATE FUNCTIONS ─────────────────────────────────────
@@ -1043,6 +1392,13 @@ function updateStatus(n, val) {
   paxState[n].status = val;
   paxState[n].logEntry = `${staffName} · ${nowStr()}`;
   const p = PAX_DATA.find(x => x.n === n);
+  // Facilita el uso: "Equipaje OK" sin maletas → 1 maleta (si cabe); sin maleta/cancelado → vacío
+  if (val === 'ok' && !(parseInt(paxState[n].bags) > 0)) {
+    const i = bookingInfo(p);
+    if (i.total + 1 <= i.max) { paxState[n].bags = 1; paxState[n].bagTime = nowStr(); }
+  } else if (val === 'no-maleta' || val === 'cancelado') {
+    paxState[n].bags = '';
+  }
   const statusLabels = { ok:'✓ Equipaje OK', 'no-maleta':'Sin maleta', cancelado:'Canceló', personal:'Lleva personalmente', directo:'Directo aeropuerto', '':'Pendiente' };
   addLog(`${p.lastName}, ${p.firstName} → ${statusLabels[val] || val}`);
   pushPaxState(n);
@@ -1082,12 +1438,31 @@ function closeCompanionToast() {
 }
 
 function updateBags(n, val) {
-  paxState[n].bags = val;
-  paxState[n].bagTime = nowStr();
   const p = PAX_DATA.find(x => x.n === n);
-  addLog(`${p.lastName}, ${p.firstName} → ${val} maleta(s)`);
+  const prev = paxState[n].bags;
+  const num = val === '' ? '' : Math.max(0, parseInt(val) || 0);
+  paxState[n].bags = num;
+  const i = bookingInfo(p);
+  if (i.total > i.max) {
+    paxState[n].bags = prev; // no se guarda hasta que se autorice
+    askExtra(p, { ...i, total: i.total }, i.total - i.base, () => commitBags(n, num), () => renderTable());
+    return;
+  }
+  commitBags(n, num);
+}
+
+function commitBags(n, num) {
+  const p = PAX_DATA.find(x => x.n === n);
+  paxState[n].bags = num;
+  paxState[n].bagTime = nowStr();
+  if (num > 0 && !paxState[n].status) {
+    paxState[n].status = 'ok';
+    paxState[n].logEntry = `${staffName} · ${nowStr()}`;
+  }
+  addLog(`${p.lastName}, ${p.firstName} → ${num || 0} maleta(s)`);
   pushPaxState(n);
   renderTable();
+  if (currentTab === 'summary') renderSummary();
 }
 
 function updateNotes(n, val) {
@@ -1164,7 +1539,7 @@ function renderSummary() {
     html += `
       <div class="flight-card">
         <div class="flight-card-title">
-          <span class="tag-pill tag-${f.tag}">${f.tag}</span>
+          <span class="tag-pill ${tagCls(f.tag)}">${f.tag}</span>
           ${f.label} &nbsp;<span style="font-size:13px;color:var(--txt2);font-weight:400">${fpax.length} pax</span>
         </div>
         <div class="flight-stats">
@@ -1420,6 +1795,9 @@ function generatePDF() {
     }).join('')}
     </tbody>
   </table>
+
+  ${(() => { const rs = Object.values(paxReports).filter(r => r && (r.type || r.text)); if (!rs.length) return '';
+    return '<h2>Reports de equipaje (' + rs.length + ')</h2>' + rs.map(r => `<div style="border:1px solid #c0392b;border-left:5px solid #c0392b;border-radius:6px;padding:8px 10px;margin-bottom:8px;page-break-inside:avoid"><strong>${r.pax || ''}</strong> · Booking ${r.booking || '—'} · <span style="color:#c0392b;font-weight:700">${r.type || ''}</span><div style="font-size:11px;color:#666">${r.by || ''} · ${r.time || ''}</div><div style="font-size:12px;margin:4px 0">${(r.text || '').replace(/</g,'&lt;')}</div><div style="display:flex;gap:6px;flex-wrap:wrap">${(r.photos || []).map(ph => `<img src="${ph}" style="width:30%;max-height:180px;object-fit:cover;border-radius:4px">`).join('')}</div></div>`).join(''); })()}
 
   <h2>Observaciones</h2>
   <div style="background:#f9f9f9;padding:10px;border-radius:6px;font-size:12px">${(v('op-obs')||'').split('\\n').join('<br>') || 'Sin observaciones.'}</div>
