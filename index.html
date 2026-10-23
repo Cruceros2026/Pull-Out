@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Control de Equipaje – Pull Out v56</title>
+<title>Control de Equipaje – Pull Out v58</title>
 <style>
 :root {
   --bg:#fafaf8; --bg2:#f2f1ed; --bg3:#e8e7e1; --bg4:#dddcd6;
@@ -59,6 +59,11 @@ body{font-family:var(--font);background:var(--bg);color:var(--txt);font-size:14p
 .op-header{background:var(--bg2);border-bottom:0.5px solid var(--border);padding:16px 20px}
 .op-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:12px}
 .op-field{display:flex;flex-direction:column;gap:3px}
+.porter-add select{width:100%;max-width:420px}
+.porters-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.porter-chip{display:inline-flex;align-items:center;gap:6px;background:#eaf4f3;border:1px solid #cfe0df;color:#142b3b;border-radius:20px;padding:4px 6px 4px 12px;font-size:12.5px;font-weight:600}
+.porter-chip button{border:none;background:#cfe0df;color:#47606b;border-radius:50%;width:20px;height:20px;line-height:20px;padding:0;font-size:11px;cursor:pointer}
+.porters-empty{font-size:12px;color:var(--txt3);font-style:italic}
 .op-field label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--txt2)}
 .op-field input{padding:7px 10px;border:0.5px solid var(--border2);border-radius:var(--radius-sm);background:var(--bg);color:var(--txt);font-size:13px}
 .op-times{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin-bottom:10px}
@@ -168,6 +173,13 @@ tr.has-alert td{background:var(--amber-bg)}
 /* ── FOTOS ── */
 .photo-slot{border:1.5px dashed var(--border2);border-radius:var(--radius);aspect-ratio:1;display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;background:var(--bg3)}
 .photo-slot img{width:100%;height:100%;object-fit:cover}
+.seals-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.seal-card{background:var(--bg3);border-radius:var(--radius-sm);padding:14px;min-width:0}
+.seal-photos{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seal-photos .photo-placeholder{font-size:18px}
+@media(max-width:700px){.seals-grid{grid-template-columns:1fr}}
+.trucks-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+@media(max-width:600px){.trucks-grid{grid-template-columns:1fr}}
 .photo-placeholder{text-align:center;font-size:22px;color:var(--txt3);pointer-events:none}
 .photo-placeholder span{font-size:11px;display:block;margin-top:4px}
 /* ── MOBILE CARDS ── */
@@ -569,7 +581,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
     <img class="login-logo-img" src="data:image/png;base64,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" alt="ILS Tours" />
     <div class="login-title-row">
       <div class="login-title">Control de Equipaje</div>
-      <span class="login-version-badge">v56</span>
+      <span class="login-version-badge">v58</span>
     </div>
     <div class="login-sub">Pull Out – Embarque</div>
     <div class="login-info-box">Para usar esta planilla debes subir la planilla Master de Hospitality.</div>
@@ -583,7 +595,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 <div id="app">
   <div class="app-header">
     <div class="header-left">
-      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v56</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
+      <h1>🧳 Control de Equipaje — Pull Out <small style="font-size:10px;color:var(--txt3);font-weight:400">v58</small> &nbsp;<span id="op-id-badge" style="font-size:12px;font-weight:400;color:var(--txt2);background:var(--bg3);padding:3px 10px;border-radius:20px;letter-spacing:0.03em"></span></h1>
       <p id="hdr-sub">Sin viaje cargado</p>
     </div>
     <div class="header-right">
@@ -716,6 +728,14 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
         <div class="op-field"><label>Destino</label><input type="text" value="" id="op-destino"></div>
         <div class="op-field"><label>Nombre del crucero</label><input type="text" id="op-crucero" placeholder="ej. Silver Cloud"></div>
       </div>
+      <!-- v58: porters de la operación -->
+      <div class="op-field" style="margin-top:14px">
+        <label>Porters de la operación <span id="porters-n" style="text-transform:none;letter-spacing:0;font-weight:400"></span></label>
+        <div class="porter-add">
+          <select id="porter-sel" class="filter-select" onchange="addPorter(this)"></select>
+        </div>
+        <div id="porters-list" class="porters-list"></div>
+      </div>
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin:16px 0 12px">Línea de tiempo</div>
       <div class="op-times">
         <div class="time-field"><label>Recepción equipaje hotel</label><div class="time-row"><input type="time" id="t-recepcion"><button class="now-btn" onclick="setNow('t-recepcion')">Ahora</button></div></div>
@@ -732,32 +752,47 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
 
     <!-- SECCIÓN CAMIONES -->
     <div style="border-radius:var(--radius);border:0.5px solid var(--border);padding:20px;margin-bottom:14px">
-      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:14px">🚛 Camiones y sellos</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px" id="trucks-seals-grid">
-        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px">
-          <div style="font-weight:700;margin-bottom:10px">Camión 1</div>
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:6px">🚛 Camiones y sellos</div>
+      <div style="font-size:12px;color:var(--txt2);margin-bottom:12px">Hasta 3 fotos del sello por camión. Se guardan asociadas a esta operación.</div>
+      <div class="seals-grid" id="trucks-seals-grid">
+        <div class="seal-card">
+          <div style="font-weight:700;margin-bottom:10px">🚛 Camión 1</div>
           <div class="op-field"><label>N° de sello</label><input type="text" id="sello-camion1" placeholder="ej. 123456" oninput="saveTruckData()"></div>
-          <div style="font-size:12px;color:var(--txt2);margin-top:8px">Maletas cargadas: <strong id="sello-bags1">0</strong></div>
+          <div style="font-size:12px;color:var(--txt2);margin:8px 0 10px">Maletas cargadas: <strong id="sello-bags1">0</strong></div>
+          <div class="seal-photos"><div class="photo-slot" id="photo-slot-1_0" onclick="triggerPhotoUpload('1_0')"><div class="photo-placeholder">📷<br><span>Foto 1</span></div></div><div class="photo-slot" id="photo-slot-1_1" onclick="triggerPhotoUpload('1_1')"><div class="photo-placeholder">📷<br><span>Foto 2</span></div></div><div class="photo-slot" id="photo-slot-1_2" onclick="triggerPhotoUpload('1_2')"><div class="photo-placeholder">📷<br><span>Foto 3</span></div></div></div>
         </div>
-        <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px">
-          <div style="font-weight:700;margin-bottom:10px">Camión 2</div>
+        <div class="seal-card">
+          <div style="font-weight:700;margin-bottom:10px">🚛 Camión 2</div>
           <div class="op-field"><label>N° de sello</label><input type="text" id="sello-camion2" placeholder="ej. 123457" oninput="saveTruckData()"></div>
-          <div style="font-size:12px;color:var(--txt2);margin-top:8px">Maletas cargadas: <strong id="sello-bags2">0</strong></div>
+          <div style="font-size:12px;color:var(--txt2);margin:8px 0 10px">Maletas cargadas: <strong id="sello-bags2">0</strong></div>
+          <div class="seal-photos"><div class="photo-slot" id="photo-slot-2_0" onclick="triggerPhotoUpload('2_0')"><div class="photo-placeholder">📷<br><span>Foto 1</span></div></div><div class="photo-slot" id="photo-slot-2_1" onclick="triggerPhotoUpload('2_1')"><div class="photo-placeholder">📷<br><span>Foto 2</span></div></div><div class="photo-slot" id="photo-slot-2_2" onclick="triggerPhotoUpload('2_2')"><div class="photo-placeholder">📷<br><span>Foto 3</span></div></div></div>
+        </div>
+        <div class="seal-card">
+          <div style="font-weight:700;margin-bottom:10px">🚛 Camión 3</div>
+          <div class="op-field"><label>N° de sello</label><input type="text" id="sello-camion3" placeholder="ej. 123458" oninput="saveTruckData()"></div>
+          <div style="font-size:12px;color:var(--txt2);margin:8px 0 10px">Maletas cargadas: <strong id="sello-bags3">0</strong></div>
+          <div class="seal-photos"><div class="photo-slot" id="photo-slot-3_0" onclick="triggerPhotoUpload('3_0')"><div class="photo-placeholder">📷<br><span>Foto 1</span></div></div><div class="photo-slot" id="photo-slot-3_1" onclick="triggerPhotoUpload('3_1')"><div class="photo-placeholder">📷<br><span>Foto 2</span></div></div><div class="photo-slot" id="photo-slot-3_2" onclick="triggerPhotoUpload('3_2')"><div class="photo-placeholder">📷<br><span>Foto 3</span></div></div></div>
+        </div>
+        <div class="seal-card">
+          <div style="font-weight:700;margin-bottom:10px">🚛 Camión 4</div>
+          <div class="op-field"><label>N° de sello</label><input type="text" id="sello-camion4" placeholder="ej. 123459" oninput="saveTruckData()"></div>
+          <div style="font-size:12px;color:var(--txt2);margin:8px 0 10px">Maletas cargadas: <strong id="sello-bags4">0</strong></div>
+          <div class="seal-photos"><div class="photo-slot" id="photo-slot-4_0" onclick="triggerPhotoUpload('4_0')"><div class="photo-placeholder">📷<br><span>Foto 1</span></div></div><div class="photo-slot" id="photo-slot-4_1" onclick="triggerPhotoUpload('4_1')"><div class="photo-placeholder">📷<br><span>Foto 2</span></div></div><div class="photo-slot" id="photo-slot-4_2" onclick="triggerPhotoUpload('4_2')"><div class="photo-placeholder">📷<br><span>Foto 3</span></div></div></div>
         </div>
       </div>
       <div style="background:var(--bg3);border-radius:var(--radius-sm);padding:14px">
         <div style="font-weight:700;margin-bottom:10px">Vehículo extra (opcional)</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-          <div class="op-field"><label>Descripción</label><input type="text" id="extra-vehicle-desc" placeholder="ej. Van / Camión 3" oninput="saveTruckData()"></div>
+          <div class="op-field"><label>Descripción</label><input type="text" id="extra-vehicle-desc" placeholder="ej. Van" oninput="saveTruckData()"></div>
           <div class="op-field"><label>N° de sello</label><input type="text" id="sello-extra" placeholder="ej. 123458" oninput="saveTruckData()"></div>
         </div>
       </div>
     </div>
 
-    <!-- SECCIÓN FOTOS -->
-    <div style="border-radius:var(--radius);border:0.5px solid var(--border);padding:20px;margin-bottom:14px">
-      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:14px">📷 Fotos de sellos</div>
-      <div style="font-size:12px;color:var(--txt2);margin-bottom:12px">Máximo 3 fotos. Se guardan asociadas a esta operación.</div>
+    <!-- FOTOS ANTERIORES (v57: solo aparece si la operación tiene fotos subidas antes de que cada camión tuviera las suyas) -->
+    <div id="legacy-photos" style="display:none;border-radius:var(--radius);border:0.5px solid var(--border);padding:20px;margin-bottom:14px">
+      <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:14px">📷 Fotos de sellos anteriores (sin camión asignado)</div>
+      <div style="font-size:12px;color:var(--txt2);margin-bottom:12px">Fotos subidas antes de esta versión. Siguen saliendo en los informes.</div>
       <div id="photos-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px">
         <div class="photo-slot" id="photo-slot-0" onclick="triggerPhotoUpload(0)">
           <div class="photo-placeholder">📷<br><span>Foto 1</span></div>
@@ -790,6 +825,7 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
   <div id="tab-trucks" style="display:none">
     <div class="trucks-view">
       <div style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--txt2);margin-bottom:16px">Control de carga por camión</div>
+      <div class="trucks-grid">
       <div class="truck-card">
         <div class="truck-title">🚛 Camión 1</div>
         <div class="truck-count" id="truck1-count">0</div>
@@ -811,6 +847,29 @@ var o=[];var l=Array.isArray(e);for(f=n.s.c;f<=n.e.c;++f)s[f]=ya(f);for(var c=n.
           <button class="truck-btn" onclick="changeTruck(2,1)" title="+1">+</button>
           <button class="truck-btn" onclick="changeTruck(2,5)" title="+5">+5</button>
         </div>
+      </div>
+      <div class="truck-card">
+        <div class="truck-title">🚛 Camión 3</div>
+        <div class="truck-count" id="truck3-count">0</div>
+        <div class="truck-lbl">maletas cargadas</div>
+        <div class="truck-btns">
+          <button class="truck-btn" onclick="changeTruck(3,-5)" title="-5">−5</button>
+          <button class="truck-btn" onclick="changeTruck(3,-1)" title="-1">−</button>
+          <button class="truck-btn" onclick="changeTruck(3,1)" title="+1">+</button>
+          <button class="truck-btn" onclick="changeTruck(3,5)" title="+5">+5</button>
+        </div>
+      </div>
+      <div class="truck-card">
+        <div class="truck-title">🚛 Camión 4</div>
+        <div class="truck-count" id="truck4-count">0</div>
+        <div class="truck-lbl">maletas cargadas</div>
+        <div class="truck-btns">
+          <button class="truck-btn" onclick="changeTruck(4,-5)" title="-5">−5</button>
+          <button class="truck-btn" onclick="changeTruck(4,-1)" title="-1">−</button>
+          <button class="truck-btn" onclick="changeTruck(4,1)" title="+1">+</button>
+          <button class="truck-btn" onclick="changeTruck(4,5)" title="+5">+5</button>
+        </div>
+      </div>
       </div>
       <div class="truck-total-row">
         <span class="truck-total-lbl">Total maletas en camiones</span>
@@ -881,7 +940,10 @@ let PAX_DATA = []
 let staffName = '';
 let paxState = {}; // id → { status, bags, hotel, notes }
 let actionLog = [];
-let trucks = { 1: 0, 2: 0 };
+const TRUCK_IDS = [1, 2, 3, 4]; // v57: 4 camiones
+let trucks = { 1: 0, 2: 0, 3: 0, 4: 0 };
+function truckUsed(k) { const v = ((document.getElementById('sello-camion' + k) || {}).value || '').trim(); return k <= 2 || !!v || (parseInt(trucks[k]) || 0) > 0 || truckPhotos(k).length > 0; }
+function truckTotal() { return TRUCK_IDS.reduce((t, k) => t + (parseInt(trucks[k]) || 0), 0); }
 let bkReview = {}; // clave booking → {manual,note,resolved,...}
 let paxReports = {}; // clave pasajero → {type,text,photos[],by,time}
 let bookingExtras = {}; // clave de booking → maletas extra autorizadas
@@ -1208,6 +1270,12 @@ function login() {
     if (currentTab === 'summary') renderSummary();
   });
 
+  db.ref(VOYAGE_REF + '/porters').on('value', snap => {
+    const d = snap.val();
+    porters = d ? (Array.isArray(d) ? d : Object.values(d)).filter(Boolean) : [];
+    renderPorters();
+  });
+
   db.ref(VOYAGE_REF + '/hospcheck').on('value', snap => {
     hospCheck = snap.val() || {};
     updateHospBadge();
@@ -1235,8 +1303,7 @@ function login() {
   db.ref(VOYAGE_REF + '/trucks').on('value', snap => {
     const data = snap.val();
     if (data) {
-      trucks[1] = data['1'] || 0;
-      trucks[2] = data['2'] || 0;
+      TRUCK_IDS.forEach(k => { trucks[k] = parseInt(data[k]) || 0; });
       if (currentTab === 'trucks') updateTruckDisplay();
     }
   });
@@ -1685,19 +1752,51 @@ function updateNotes(n, val) {
   pushPaxState(n);
 }
 
+
+// ── PORTERS (v58) ────────────────────────────────────────
+const PORTER_NAMES = ["Alex Daniel Luco Smit", "Alvaro Ignacio Urrea Castillo", "Andres Muñoz Fernandez", "Axel Patricio Aravena Aravena", "Benjamin Arturo Gallegos Calero", "Bryan Ignacio Carriel Velásquez", "Byron Andrés Rivas Seguel", "Carlos Ignacio Nuñez Cepeda", "Catherine Cecilia Salinas Torres", "Claudia Andrea Martínez Guerrero", "Constanza Carrasco Vidal", "Cristóbal Ignacio Ruiz Diaz", "Diego Amaro San Martín Contador", "Diego Andres Alvial Oros", "Esteban Jean Piere Valenzuela Ordenes", "Felipe Ariel González Thomas", "Frank Orlando Silva Carrasco", "Javier Ignacio Osses Tapia", "Joaquín Andrés Riveros Olivares", "Maël Baruk Barralza Barriga", "Marcelo Espinoza", "Marcelo Joaquin Espinoza Puelma", "Matías Francisco González Thomas", "Matias Nicolas Poblete Valdes", "Maximiliano Eduardo Lopez Cortes", "Nicolás Agustín Valpuesta Martí", "Nicolas Andre Guajardo Jimenez", "Nicole Fernanda Salinas Torres", "Pablo Ignacio Lezana Toledo", "Priscila Fernanda Agüero Araya", "René Gabriel Salinas Torres", "Santiago Gallegos Calero", "Sebastian Godoy Alvial", "Sebastián Ignacio Muñoz Villablanca", "Tarek Shinya", "Tomas Francisco Vernal Yañez", "Vicente Antonio Riveros Olivares"];
+let porters = []; // porters asignados a esta operación (Firebase: pullout/{ID}/porters)
+function porterNorm(n) { return String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+function renderPorters() {
+  const sel = document.getElementById('porter-sel'); if (!sel) return;
+  const taken = new Set(porters.map(porterNorm));
+  const avail = PORTER_NAMES.filter(n => !taken.has(porterNorm(n)));
+  sel.innerHTML = '<option value="">➕ Agregar porter…</option>' + avail.map(n => `<option>${n}</option>`).join('') + '<option value="__otro">✏ Otro (escribir nombre)</option>';
+  document.getElementById('porters-list').innerHTML = porters.length
+    ? porters.map((n, i) => `<span class="porter-chip">${String(n).replace(/</g,'&lt;')}<button title="Quitar" onclick="removePorter(${i})">✕</button></span>`).join('')
+    : '<span class="porters-empty">Sin porters asignados aún.</span>';
+  document.getElementById('porters-n').textContent = porters.length ? '(' + porters.length + ')' : '';
+}
+function savePorters() { if (db) db.ref(VOYAGE_REF + '/porters').set(porters.length ? porters : null); }
+function addPorter(sel) {
+  let n = sel.value; sel.value = '';
+  if (!n) return;
+  if (n === '__otro') { n = (prompt('Nombre del porter:') || '').replace(/\s+/g, ' ').trim(); if (!n) { renderPorters(); return; } }
+  if (porters.some(x => porterNorm(x) === porterNorm(n))) { alert(n + ' ya está en la lista.'); renderPorters(); return; }
+  porters.push(n);
+  renderPorters(); savePorters();
+  addLog('Porter agregado: ' + n);
+}
+function removePorter(i) {
+  const n = porters[i]; if (n === undefined) return;
+  if (!confirm('¿Quitar a ' + n + ' de los porters de esta operación?')) return;
+  porters.splice(i, 1);
+  renderPorters(); savePorters();
+  addLog('Porter quitado: ' + n);
+}
+
 // ── TRUCKS ───────────────────────────────────────────────
 function changeTruck(t, delta) {
   trucks[t] = Math.max(0, trucks[t] + delta);
   updateTruckDisplay();
   addLog(`Camión ${t}: ${trucks[t]} maletas`);
-  db.ref(VOYAGE_REF + '/trucks').set({ '1': trucks[1], '2': trucks[2] });
+  db.ref(VOYAGE_REF + '/trucks/' + t).set(trucks[t]); // solo ese camión, para no pisar lo que otro anota en otro camión
 }
 
 function updateTruckDisplay() {
   setTimeout(updateSelloBags, 100);
-  document.getElementById('truck1-count').textContent = trucks[1];
-  document.getElementById('truck2-count').textContent = trucks[2];
-  const total = trucks[1] + trucks[2];
+  TRUCK_IDS.forEach(k => { const el = document.getElementById('truck' + k + '-count'); if (el) el.textContent = trucks[k] || 0; });
+  const total = truckTotal();
   document.getElementById('truck-total').textContent = total;
   // total registered bags
   const regBags = PAX_DATA.reduce((sum, p) => sum + (parseInt(paxState[p.n]?.bags) || 0), 0);
@@ -1928,7 +2027,7 @@ function renderSummary() {
   const ok = cnt(all,'ok'), pend = cnt(all,'');
   const otros = cnt(all,'no-maleta') + cnt(all,'personal') + cnt(all,'directo') + cnt(all,'cancelado');
   const bags = sum(all,'bags'), carry = sum(all,'carry');
-  const truck = (trucks[1]||0) + (trucks[2]||0);
+  const truck = truckTotal();
   const okSin = all.filter(p => st(p).status === 'ok' && bookingInfo(p).total === 0).length; // OK sin maletas en todo su booking
   const reports = all.filter(p => paxReports[repKey(p)]).length;
   const row = (icon, txt, val, cls) => `<div class="rs-row ${cls||''}"><span class="rs-ic">${icon}</span><span class="rs-tx">${txt}</span><span class="rs-val">${val}</span></div>`;
@@ -1946,7 +2045,7 @@ function renderSummary() {
     <div class="rs-h">🧳 Equipaje</div>
     ${row('', 'Maletas de 23 kg recibidas', bags, 'big')}
     ${row('🎒', 'Carry-on (equipaje de mano)', carry)}
-    ${row('🚛', 'Maletas cargadas en camiones (Camión 1: ' + (trucks[1]||0) + ' · Camión 2: ' + (trucks[2]||0) + ')', truck)}
+    ${row('🚛', 'Maletas cargadas en camiones (' + TRUCK_IDS.map(k => 'Camión ' + k + ': ' + (trucks[k]||0)).join(' · ') + ')', truck)}
     <div class="rs-sum ${truck === bags ? 'ok' : 'bad'}">${truck === bags ? '✔ Las maletas en camiones coinciden con las recibidas' : '⚠ No coinciden: hay una diferencia de ' + Math.abs(truck - bags) + ' maletas entre lo recibido y lo cargado'}</div>
   </div>
   ${(() => { const bks = computeBookings(); const rev = bks.filter(g => g.state === 'review').sort(bkCmp); const res = bks.filter(g => g.state === 'resolved').length;
@@ -1996,7 +2095,7 @@ function restoreOpHeader(data) {
   const fields = ['op-voyage','op-date','op-destino','op-crucero','op-obs',
     't-recepcion','t-camion','t-fin-chequeo','t-fin-embarque',
     't-salida','t-llegada-apto','t-fin-desembarque',
-    'sello-camion1','sello-camion2','sello-extra','extra-vehicle-desc'];
+    'sello-camion1','sello-camion2','sello-camion3','sello-camion4','sello-extra','extra-vehicle-desc'];
   fields.forEach(id => {
     const el = document.getElementById(id);
     if (el && data[id] !== undefined) el.value = data[id];
@@ -2006,19 +2105,14 @@ function restoreOpHeader(data) {
 
 function updateSelloBags() {
   // Actualizar conteo de maletas por camión en sección sellos
-  const t1 = document.getElementById('truck1-count');
-  const t2 = document.getElementById('truck2-count');
-  const s1 = document.getElementById('sello-bags1');
-  const s2 = document.getElementById('sello-bags2');
-  if (t1 && s1) s1.textContent = t1.textContent;
-  if (t2 && s2) s2.textContent = t2.textContent;
+  TRUCK_IDS.forEach(k => { const el = document.getElementById('sello-bags' + k); if (el) el.textContent = trucks[k] || 0; });
 }
 
 function saveOpHeader() {
   const fields = ['op-voyage','op-date','op-destino','op-crucero','op-obs',
     't-recepcion','t-camion','t-fin-chequeo','t-fin-embarque',
     't-salida','t-llegada-apto','t-fin-desembarque',
-    'sello-camion1','sello-camion2','sello-extra','extra-vehicle-desc'];
+    'sello-camion1','sello-camion2','sello-camion3','sello-camion4','sello-extra','extra-vehicle-desc'];
   const data = {};
   fields.forEach(id => {
     const el = document.getElementById(id);
@@ -2049,7 +2143,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ── FOTOS ────────────────────────────────────────────────
 let currentPhotoSlot = 0;
-const photoData = [null, null, null];
+const photoData = {}; // v57: claves "1_0".."4_2" (camión_foto); "0","1","2" = fotos antiguas sin camión
+function photoLabel(slot) { const m = String(slot).match(/^(\d)_(\d)$/); return m ? 'Camión ' + m[1] + ' — foto ' + (+m[2] + 1) : 'Foto ' + (+slot + 1); }
+function truckPhotos(t) { return [0, 1, 2].map(i => photoData[t + '_' + i]).filter(Boolean); }
+function legacyPhotos() { return ['0', '1', '2'].map(i => photoData[i]).filter(Boolean); }
 
 function triggerPhotoUpload(slot) {
   currentPhotoSlot = slot;
@@ -2068,10 +2165,10 @@ function handlePhotoUpload(input) {
     renderPhotoSlot(slot, base64);
     if (!db) return;
     db.ref(VOYAGE_REF + '/photos/' + slot).set(base64)
-      .then(() => addLog('Foto de sello ' + (slot + 1) + ' subida'))
+      .then(() => addLog('Foto de sello subida (' + photoLabel(slot) + ')'))
       .catch(err => {
         photoData[slot] = null; renderPhotoSlot(slot, null);
-        alert('No se pudo guardar la foto ' + (slot + 1) + ': ' + err.message + '. Revisa tu conexión e intenta de nuevo.');
+        alert('No se pudo guardar la foto (' + photoLabel(slot) + '): ' + err.message + '. Revisa tu conexión e intenta de nuevo.');
       });
   }, () => alert('No se pudo leer la foto. Intenta con otra.'));
 }
@@ -2081,16 +2178,17 @@ function renderPhotoSlot(slot, base64) {
   if (!el) return;
   el.innerHTML = base64
     ? `<img src="${base64}" style="width:100%;height:100%;object-fit:cover">
-       <div style="position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border-radius:20px;padding:2px 8px;font-size:10px;cursor:pointer" onclick="event.stopPropagation();removePhoto(${slot})">✕</div>`
-    : `<div class="photo-placeholder">📷<br><span>Foto ${slot + 1}</span></div>`;
+       <div style="position:absolute;bottom:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border-radius:20px;padding:2px 8px;font-size:10px;cursor:pointer" onclick="event.stopPropagation();removePhoto('${slot}')">✕</div>`
+    : `<div class="photo-placeholder">📷<br><span>Foto ${(String(slot).includes('_') ? +String(slot).split('_')[1] : +slot) + 1}</span></div>`;
   el.style.position = 'relative';
 }
 
 function removePhoto(slot) {
+  if (!confirm('¿Eliminar esta foto (' + photoLabel(slot) + ')?')) return;
   photoData[slot] = null;
   renderPhotoSlot(slot, null);
   if (db) db.ref(VOYAGE_REF + '/photos/' + slot).remove();
-  addLog('Foto ' + (slot + 1) + ' eliminada');
+  addLog('Foto eliminada (' + photoLabel(slot) + ')');
 }
 
 // Cargar fotos desde Firebase al hacer login
@@ -2099,12 +2197,12 @@ function loadPhotos() {
   db.ref(VOYAGE_REF + '/photos').once('value', snap => {
     const data = snap.val();
     if (!data) return;
-    [0, 1, 2].forEach(i => {
-      if (data[i]) {
-        photoData[i] = data[i];
-        renderPhotoSlot(i, data[i]);
-      }
+    Object.keys(data).forEach(k => {
+      if (!data[k]) return;
+      photoData[k] = data[k];
+      renderPhotoSlot(k, data[k]);
     });
+    if (legacyPhotos().length) document.getElementById('legacy-photos').style.display = 'block';
   });
 }
 
@@ -2152,6 +2250,7 @@ async function buildWordHtml() {
 
   // Datos de la operación
   h += wTitle('Datos de la operación') + wTable(['Voyage','Fecha','Destino','Crucero'], [[voyage, fecha, v('op-destino'), ship]]);
+  h += wTitle('Porters (' + porters.length + ')') + wTable(['N°','Nombre'], porters.map((n, i) => [i + 1, n]));
   h += wTitle('Línea de tiempo') + wTable(['Recepción equipaje hotel','Llegada camión','Fin chequeo','Fin embarque camión','Salida a aeropuerto','Llegada aeropuerto','Fin desembarque aerolínea'],
     [['t-recepcion','t-camion','t-fin-chequeo','t-fin-embarque','t-salida','t-llegada-apto','t-fin-desembarque'].map(id => v(id) || '—')]);
 
@@ -2165,12 +2264,19 @@ async function buildWordHtml() {
 
   // Camiones y sellos
   h += wTitle('Camiones y sellos') + wTable(['Vehículo','N° de sello','Maletas cargadas'],
-    [['Camión 1', v('sello-camion1') || '—', trucks[1] || 0], ['Camión 2', v('sello-camion2') || '—', trucks[2] || 0],
-     [v('extra-vehicle-desc') || 'Vehículo extra', v('sello-extra') || '—', '—']]);
-  const seals = (photoData || []).filter(Boolean);
-  if (seals.length) {
-    h += wTitle('Fotos de sellos');
-    for (let i = 0; i < seals.length; i++) h += '<p style="margin:0 0 10pt">' + await wImg(seals[i]) + '</p>';
+    TRUCK_IDS.filter(truckUsed).map(k => ['Camión ' + k, v('sello-camion' + k) || '—', trucks[k] || 0])
+      .concat((v('extra-vehicle-desc') || v('sello-extra')) ? [[v('extra-vehicle-desc') || 'Vehículo extra', v('sello-extra') || '—', '—']] : [])
+      .concat([['TOTAL', '', truckTotal()]]));
+  for (const k of TRUCK_IDS) {
+    const ph = truckPhotos(k);
+    if (!ph.length) continue;
+    h += wTitle('Fotos de sellos — Camión ' + k + (v('sello-camion' + k) ? ' (sello ' + v('sello-camion' + k) + ')' : ''));
+    for (const x of ph) h += '<p style="margin:0 0 10pt">' + await wImg(x) + '</p>';
+  }
+  const oldPh = legacyPhotos();
+  if (oldPh.length) {
+    h += wTitle('Fotos de sellos (sin camión asignado)');
+    for (const x of oldPh) h += '<p style="margin:0 0 10pt">' + await wImg(x) + '</p>';
   }
 
   // Bookings
@@ -2221,18 +2327,16 @@ async function exportWord() {
 
 function generatePDF() {
   const v = id => (document.getElementById(id) || {}).value || '—';
-  const t1bags = (document.getElementById('truck1-count') || {}).textContent || '0';
-  const t2bags = (document.getElementById('truck2-count') || {}).textContent || '0';
-  const totalBags = parseInt(t1bags) + parseInt(t2bags);
+  const totalBags = truckTotal();
   const extraDesc = v('extra-vehicle-desc');
   const extraSello = v('sello-extra');
   const paxOK = PAX_DATA.filter(p => (paxState[p.n]||{}).status === 'ok').length;
   const paxTotal = PAX_DATA.length;
 
+  const pImg = p => `<img src="${p}" style="width:30%;margin:4px;border-radius:6px;object-fit:cover;max-height:180px">`;
   let photosHTML = '';
-  photoData.forEach((p, i) => {
-    if (p) photosHTML += `<img src="${p}" style="width:30%;margin:4px;border-radius:6px;object-fit:cover;max-height:180px">`;
-  });
+  TRUCK_IDS.forEach(k => { const ph = truckPhotos(k); if (ph.length) photosHTML += `<div style="width:100%;font-weight:700;margin-top:6px">Camión ${k}${v('sello-camion' + k) !== '—' ? ' — sello ' + v('sello-camion' + k) : ''}</div>` + ph.map(pImg).join(''); });
+  if (legacyPhotos().length) photosHTML += '<div style="width:100%;font-weight:700;margin-top:6px">Sin camión asignado</div>' + legacyPhotos().map(pImg).join('');
 
   const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
   <title>Informe Pull Out - ${v('op-voyage')}</title>
@@ -2262,6 +2366,7 @@ function generatePDF() {
     <div class="field"><div class="label">Destino</div><div class="value">${v('op-destino')}</div></div>
     <div class="field"><div class="label">Crucero</div><div class="value">${v('op-crucero')}</div></div>
   </div>
+  <div class="field"><div class="label">Porters (${porters.length})</div><div class="value">${porters.length ? porters.join(' · ') : '—'}</div></div>
 
   <h2>Línea de tiempo</h2>
   <div class="grid">
@@ -2277,16 +2382,11 @@ function generatePDF() {
   <h2>Camiones y sellos</h2>
   <div class="truck-box">
     <div class="grid">
-      <div>
-        <div class="label">Camión 1</div>
-        <div class="value">Sello: ${v('sello-camion1')}</div>
-        <div style="margin-top:4px">Maletas: <strong>${t1bags}</strong></div>
-      </div>
-      <div>
-        <div class="label">Camión 2</div>
-        <div class="value">Sello: ${v('sello-camion2')}</div>
-        <div style="margin-top:4px">Maletas: <strong>${t2bags}</strong></div>
-      </div>
+      ${TRUCK_IDS.filter(truckUsed).map(k => `<div>
+        <div class="label">Camión ${k}</div>
+        <div class="value">Sello: ${v('sello-camion' + k)}</div>
+        <div style="margin-top:4px">Maletas: <strong>${trucks[k] || 0}</strong></div>
+      </div>`).join('')}
     </div>
     ${extraDesc !== '—' ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid #ddd">
       <div class="label">${extraDesc}</div>
